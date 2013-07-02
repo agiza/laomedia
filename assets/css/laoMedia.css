@@ -1,0 +1,88 @@
+body {
+	background-image: url("../img/blueFade.jpg");
+    background-repeat:repeat-x;
+    background-color:#06365a;
+}
+      
+#header{
+    background-color:#000000;
+}
+      
+#logo{
+}
+      
+#laoMedia{
+	margin-left:200px;
+}
+
+#headtext{
+	text-align:center;
+	display:none;
+	color:#ffffff;
+	font-size:1.2em;
+	}
+      
+#middlecontent{
+    background-color:#FFFFFF;
+}
+
+#middlecontent2{
+    background-color:#FFFFFF;
+    min-height:400px;
+}
+
+#albumlisting td{
+	padding:5px;
+	}
+
+.vidlabel {
+	font-weight:500;
+	color:#CC8F00;
+	}
+	
+label{
+	font-size:18px;
+	}
+	
+.sectiontitle{
+	font-size:1.5em;
+	font-weight:600;
+	border-bottom:solid 1px #EAEAEA;
+	}
+
+.notes{
+	color: #969696;
+	}
+		
+.form-notes{
+	color: #969696;
+	font-size:.5em;
+	}
+	
+.smaller{
+	font-size:.8em;
+	}
+	
+.indent{
+	margin-left:1em;
+	}
+	
+.ajaxResponse{
+	color:#54AA54;
+	}
+	
+.tab-pane textarea{
+	width:300px;
+	}
+
+.tab-pane{
+	padding:0;
+	}
+
+.hidden{
+	display:none;
+	}
+.unhidden{
+	display:block;
+	}
+	
