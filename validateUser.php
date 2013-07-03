@@ -1,4 +1,7 @@
 <?php
+
+//UNCOMMENT SECTION BELOW FOR USE WITH COSIGN/WEBACCESS
+
 /*	
 if(isset($_SERVER['REMOTE_USER'])){
 	$userID = $_SERVER['REMOTE_USER'];
@@ -8,9 +11,13 @@ if(isset($_SERVER['REMOTE_USER'])){
 	}
 */	
 
-//$userID="kms60";
-$userID="srt142";
-//$userID = "admin";
+/*
+ASSIGN $userID BELOW FOR LOCAL INSTALLATION OR TO OVERRIDE WEBACCESS ASSIGNMENT
+THIS CAN BE USED TO MASQUERADE AS ANOTHER USER WITHIN THE SOFTWARE
+*/
+
+$userID = "admin";//comment out this line when using Cosign
+
 $userID=strtolower($userID);
 
 ?>

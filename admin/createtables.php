@@ -1,16 +1,19 @@
 <?php
 
-/*echo"This file is run on set up of this software to set up initial tables in the database. 
+echo"This file is run on set up of this software to set up initial tables in the database. 
 Running this deletes all information in any existing tables. As a precaution comment tags have been inserted to prevent accidental deletion. If you are certain you want to run this file you must open the file in a text editor and delete the comment tags and save the file before running it from your browser.";
-*/
 
-include "../validateUser.php";
-
-include "../dbconnect.php";
-
-include "validateAdmin.php";
 
 /*
+UNCOMMENT SECTION BELOW TO CREATE TABLES
+AFTER RUNNING THIS SCRIPT FROM BROWSER RECOMMENT AS SAFEGUARD AGAINST DATA DELETION
+OR REMOVE THIS FILE COMPLETELY 
+*/
+
+/*
+include "../dbconnect.php";
+
+
 //CREATE USERS TABLE
 $dropTable = $db->prepare('DROP TABLE IF EXISTS users');
 $dropTable->execute();
@@ -19,11 +22,11 @@ $createTable = $db->prepare('CREATE TABLE users(rowID int, userID varchar(8) pri
 $createTable->execute();
 
 //create a PSU Only album with psu permission
-$stmt = $db->prepare("INSERT INTO users(userID,role) VALUES('admin','admin')");
-	$stmt->execute();
-
+$addAdmin = $db->prepare("INSERT INTO users(userID,role) VALUES('admin','admin')");
+$addAdmin->execute();
+	
 echo"<h3>A new 'users' table has been created.</h3><br/>";
-*/
+
 
 //CREATE media TABLE
 //integer types will be a 1 or 0 for true or false
@@ -37,7 +40,7 @@ $alterTable = $db->exec("ALTER TABLE media auto_increment=1000");
 
 echo"<h3>A new 'media' table has been created.</h3><br/>";
 
-/*
+
 //CREATE albums TABLE
 //album title, description, permission, how many videos in album?
 $dropTable = $db->prepare('DROP TABLE IF EXISTS albums');
@@ -74,5 +77,7 @@ $createTable->execute();
 
 echo"<h3>A new 'albumpermission' table has been created.</h3><br/>";
 */
+echo "<a href='index.php'>Go to Administration panel to manage users.</a>";
+
 ?>
 
