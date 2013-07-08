@@ -92,7 +92,7 @@ include "playerConfig.php";
     	  &nbsp;
     	  <button type="submit" class="btn">GO</button>
           </form> 
-          <a href="completeVideoListing.php" class="btn btn-info">View Complete Listing</a> 
+          <a href="mediaListing.php?start=0" class="btn btn-info">View Complete Listing</a> 
           <br/><br/>      
         </div>
         

@@ -15,7 +15,7 @@ $format= $p_format;
 $size = $p_size;
 
 //set width & height variables
-include "../functions/videosize.php";
+include "../functions/playersize.php";
 
 //update DB
 $stmt = $db->prepare("UPDATE media SET format=:format, size=:size WHERE mediaID = :mediaID");

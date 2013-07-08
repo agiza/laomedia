@@ -73,10 +73,10 @@ $albumID = $p_albumID;
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<?php 
 			if($videocount > 1){
-				echo $videocount . " videos.";
+				echo $videocount . " files.";
 			}			
 			if($videocount == 1){
-				echo $videocount . " video.";
+				echo $videocount . " file.";
 			}
 			?>
 			
@@ -112,7 +112,13 @@ $albumID = $p_albumID;
 		$uploaddate =  date('m/d/Y',$row['uploaddate']);
 		
 		 
-			echo "<tr><td>" . "<a href='settings.php?vid=" . $row['mediaID'] . "'>" . $row['title'] . "</a></td><td>" . $row['description'] . "</td><td>" . $uploaddate . "</td><td>" . $row['viewcount'] ."</td></tr>";
+			echo "<tr><td>" . "<a href='settings.php?vid=" . $row['mediaID'] . "'>" . $row['title'] . "</a></td><td>" . $row['description'] . "</td><td>" . $uploaddate . "</td>";
+			if($row['caption'] != 'none'){
+				echo "<td>&nbsp;&nbsp; <i class='icon-ok'></i></td>";
+			}else{
+				echo "<td></td>";
+			}
+			echo "<td>" . $row['viewcount'] ."</td></tr>";
 		}		        
     
     ?>
