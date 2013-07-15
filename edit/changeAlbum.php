@@ -17,19 +17,32 @@ $stmt->execute(array(':albumID'=>$albumID));
 $row = $stmt->fetch();
 $albumname = $row['album'];
 
-//delete
+//delete from any other album
 	$stmt = $db->prepare("DELETE FROM albummedia WHERE mediaID= :mediaID");
 	$stmt->execute(array(':mediaID'=>$mediaID));
 
-//insert
+//insert new association
 if($albumID > 0){
 	$stmt = $db->prepare("INSERT INTO albummedia(albumID,mediaID) VALUES(:albumID,:mediaID)");
 	$stmt->execute(array(':mediaID' => $mediaID, ':albumID' => $albumID));
 	
+	//change media permissions status to 'album'
+	$stmt = $db->prepare("UPDATE media SET permission='album' WHERE mediaID = :mediaID");
+	$stmt->execute(array(':mediaID'=>$mediaID));
+	
 	echo "<span style='color:green;'>Added to " . $albumname . "<span>";
-}else{
+}else{//no album
+	//change media permissions status to 'public'
+$stmt = $db->prepare("UPDATE media SET permission='public' WHERE mediaID = :mediaID");
+$stmt->execute(array(':mediaID'=>$mediaID));
 	echo "<span style='color:red;'>Removed from albums.<span>";
 }
+
+
+
+//GO TO admin.php
+$goto = "../settings.php?vid=" . $mediaID . "&showpane=pane2";
+echo "<script> window.location.href = '$goto' </script>";
 
 ?>
 

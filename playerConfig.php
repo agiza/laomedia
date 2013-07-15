@@ -28,7 +28,7 @@ $uploadVideoPath = "content/";
 //$uploadVideoPath = "/usr/local/WowzaMediaServer/content/";
 
 //UPLOAD AUDIO PATH
-$uploadAudioPath = "audio/";
+$uploadAudioPath = "content/";
 
 //JWPLAYER REQUIRES KEY
 $playerKey = "qjdF661dSqQzJ9K4WWi0cAirBCRoQV5ioxGtEg==";

@@ -27,7 +27,7 @@ if (is_uploaded_file($_FILES['files']['tmp_name'])) {
     $file_tmp =$_FILES['files']['tmp_name'];
     $file_type=$_FILES['files']['type'];
     $medianame = $mediaID . ".mp3";
-    $moveto = "audio/" . $medianame;
+    $moveto = "content/" . $medianame;
  
     	if(move_uploaded_file($file_tmp, $moveto)){
     		echo "<div style='font-size:1.4em;'>This file was successfully uploaded.<br/>";

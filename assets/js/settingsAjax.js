@@ -30,31 +30,22 @@
 	}
 	
 //ALBUM AJAX
+	//submit form onClick of radio buttons
 	function changeAlbum(albumID){
-		document.getElementById('albumResponse').innerHTML="";
-		var dataString = 'mediaID='+mediaID + '&albumID=' + albumID;
-		$.ajax({
-			type: "POST",  
- 			 url: "edit/changeAlbum.php",  
-  			data: dataString,  
-  			success: function(data) {		
-  				document.getElementById('albumResponse').innerHTML=data;
-  			}   			
-   		 });      
-	return false;  		
-	
+		document.forms["albumform"].submit();
 	}
 	
 //PERMISSION AJAX
 	function changePermission(){
-		//var dataString = $("#permissionForm").serialize();
-		var dataString = 'mediaID='+mediaID;
+		var dataString = $("#permissionForm").serialize();
+		//var dataString = 'mediaID='+mediaID;
 		$.ajax({
 			type: "POST",  
- 			 url: "changePermission.php",  
+ 			 url: "edit/changePermission.php",  
   			data: dataString,  
   			success: function(data) {		
   				document.getElementById('permissionResponse').innerHTML=data;
+  				document.getElementById('useraccessID').value='';
   			}   			
    		 });      
 	return false;  		

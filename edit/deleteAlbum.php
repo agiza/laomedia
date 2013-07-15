@@ -26,6 +26,18 @@ if($row['posterimage']==1){
 	unlink($albumposterimage);
 }
 
+//CHANGE PERMISSION OF ALL MEDIA IN ALBUM TO PUBLIC
+$stmt = $db->prepare("SELECT mediaID FROM albummedia WHERE albumID = $albumID");
+		$stmt->execute();		
+		$videocount = $stmt->rowCount(); 
+		$result = $stmt->fetchAll();
+		foreach($result as $row){
+		$mediaID=$row['mediaID'];
+			//set new permission on media
+			$changePermission = $db->prepare("UPDATE media SET permission='public' WHERE mediaID = :mediaID");
+			$changePermission->execute(array(':mediaID'=>$mediaID));
+		} 
+
 
 //DELETE DATA FROM DB
 $stmt = $db->prepare("DELETE FROM albums WHERE albumID=:albumID");

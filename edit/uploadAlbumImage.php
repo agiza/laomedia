@@ -10,28 +10,18 @@ include "../validateContributor.php";
 //IMPORT VARIABLES
 import_request_variables("pg","p_");
 $albumID = $p_albumID;
-$album = strip_tags($p_album);
 
-$filename = $_FILES['image_file']['name'];
-if($filename == null){
-	$posterimage = 0;
-	echo "<script>alert('Select a file to upload.');history.go(-1)</script>";	
-	}else{
-	$posterimage = 1;
+
+//CHECK FILE
+if($_FILES['image_file']['name'] == null){
+	echo "<script>alert('Select a file to upload.');history.go(-1)</script>";
+	exit();
+}elseif(($_FILES['image_file']["type"] != "image/jpeg")
+&& ($_FILES['image_file']["type"] != "image/pjpeg")){
+		echo "<script>alert('File must be a JPEG image file. Please select another.');history.go(-1);</script>";
+		exit();
 	}
 
-
-
-$stmt = $db->prepare("UPDATE albums SET posterimage=:posterimage WHERE albumID = :albumID");
-	$stmt->execute(array(':posterimage'=>$posterimage,':albumID' => $albumID));
-
-
-//POSTERIMAGE
-$image_tempname = $_FILES['image_file']['name'];
-
-//IF A JPEG FILE HAS BEEN SELECTED THEN DO THIS
-if(($_FILES['image_file']["type"] == "image/jpeg")
-|| ($_FILES['image_file']["type"] == "image/pjpeg")){
 
 //DIRECTORY PATHS FOR IMAGES
 	$ImageDir ="../playerimage/";
@@ -43,18 +33,21 @@ if(($_FILES['image_file']["type"] == "image/jpeg")
 $uploadedfile = $_FILES['image_file']['tmp_name'];
 list($width,$height)=getimagesize($uploadedfile);
 		
-
+	if($height > 550){
 		//SIZE THE LARGER IMAGE
-		$new_height = 360;
+		$new_height = 540;
 		$new_width = $width * ($new_height/$height);
 
 		$largeimage = imagecreatefromjpeg($uploadedfile);
 		$image_resized = imagecreatetruecolor($new_width, $new_height);
 		imagecopyresampled($image_resized, $largeimage, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-		imagejpeg($image_resized, $newfilename,80);
+		imagejpeg($image_resized, $newfilename,100);
 		imagedestroy($image_resized);
 		imagedestroy($largeimage);
-
+	}else{//upload image size as is
+		$originalimage = imagecreatefromjpeg($uploadedfile);
+		imagejpeg($originalimage, $newfilename,100);
+	}
 		
 		//CREATE THUMBNAIL IMAGE
 
@@ -69,9 +62,11 @@ list($width,$height)=getimagesize($uploadedfile);
  		imagedestroy($largeimage);
   		imagedestroy($thumb);
   		
-	}else{
-		//echo "ERROR READING FILE";
-	}
+
+	
+//UPDATE DB
+$stmt = $db->prepare("UPDATE albums SET posterimage=1 WHERE albumID = :albumID");
+	$stmt->execute(array(':albumID' => $albumID));
 
 //GO TO
 $goto = "editAlbum.php?albumID=" . $albumID;

@@ -20,7 +20,7 @@ $videoposterimage="../playerimage/" . $mediaID . ".jpg";
 	if (!chmod($videoposterimage,0777)){echo "No file found.</br>";}
 	unlink($videoposterimage);
 	//DELETE THUMBNAIL
-	$videoposterimage="vidframes/thumbs/" . $mediaID . ".jpg";
+	$videoposterimage="../playerimage//thumbs/" . $mediaID . ".jpg";
 	if (!chmod($videoposterimage,0777)){echo "No file found.</br>";}
 	unlink($videoposterimage);
 

@@ -12,6 +12,10 @@ include "playerConfig.php";
 import_request_variables("pg","p_");
 
 $mediaID = $p_vid;
+//check for passed showpane variable
+if(isset($p_showpane)){
+	$showpane = $p_showpane;
+	}
 
 
 //GET VIDEO INFO
@@ -36,10 +40,19 @@ $viewcount = $row['viewcount'];
 //set player size for this page
 if($format=="standard"){$width="480"; $height="360";}
 if($format=="wide"){$width="640"; $height="360";}
-if($type=="audio"){$width="300"; $height="80";}
+if($type=="audio"){$width="300"; $height="26";}
 
 //set player image
 include "functions/playerimage.php";
+
+//current album assignment   		
+$albumsearch = $db->prepare("SELECT av.albumID,a.album,a.permission FROM albummedia av LEFT JOIN albums a ON av.albumID = a.albumID WHERE av.mediaID = :mediaID");
+		$albumsearch->execute(array(':mediaID'=> $mediaID));
+		$is_in_album = $albumsearch->rowCount();
+		$row = $albumsearch->fetch(PDO::FETCH_ASSOC);      
+		$currentalbum =  $row['album'];
+		$albumPermission = $row['permission'];
+		$currentAlbumID = $row['albumID'];
 
 
 ?>
@@ -79,6 +92,8 @@ size = '<?php echo $size; ?>';
 format = '<?php echo $format; ?>';
 caption = '<?php echo $caption; ?>';
 mediaID = <?php echo $mediaID; ?>;
+showpane = '<?php echo $showpane; ?>';
+
 </script>
 
 <!--settingsAjax.js includes functions called to make changes to DB, uses above variables-->
@@ -98,7 +113,7 @@ mediaID = <?php echo $mediaID; ?>;
 
 <?php // no file found
 	if($stmt->rowCount() == 0){
-		echo "<div style='width:640px;height:500px;margin:0 auto;text-align:center'> <h2>No video with this ID# was found.</div>";
+		echo "<div style='width:640px;height:500px;margin:0 auto;text-align:center'> <h2>No media with this ID# was found.</div>";
 	}else{
 ?>   
 
@@ -153,13 +168,13 @@ jwplayer("mediaspace").setup({
 	<div class="tabbable span12">
 
   		<ul class="nav nav-tabs" id="tabdivs">
-    		<li class="active"><a href="#pane1" data-toggle="tab">Summary</a></li>
+    		<li class="#pane1"><a href="#pane1" data-toggle="tab">Summary</a></li>
     		<li><a href="#pane2" data-toggle="tab">Album</a></li>
     		<li><a href="#pane3" data-toggle="tab">Permission</a></li>
     		<li><a href="#pane4" data-toggle="tab">Caption</a></li>
-    		<li><a href="#pane5" data-toggle="tab">Title Image</a></li>
+    		<li><a href="#pane5" data-toggle="tab">Poster Image</a></li>
     		<li><a href="#pane6" data-toggle="tab">Format/Size/Embed</a></li>
-    		<li><a href="#pane7" data-toggle="tab"><span style="color:red;">Delete</span></a></li>
+    		<li><a href="#pane7" data-toggle="tab"><span class="red">Delete</span></a></li>
   		</ul>
   
   <div class="tab-content">
@@ -180,7 +195,7 @@ jwplayer("mediaspace").setup({
 			<label for='tags' class='vidlabel control-label'>Tags:</label>
 			<input id='tags' name='tags' style="width:400px;" value='<?php echo $tags; ?>'/>
 			<br/>
-			<span class='form-notes' style>Add some relevant keywords to make your video easier to find. (Separate your tags with commas, please.)</small>
+			<span class='form-notes' style>Add some relevant keywords to make your video easier to find. (Separate your tags with commas.)</small>
 			<br/><br/>
 			
 			<button type='submit' class="btn btn-success"/><i class="icon-plus icon-white"> </i> SUBMIT CHANGES</button><br/>
@@ -208,54 +223,53 @@ jwplayer("mediaspace").setup({
 			}		
 		?>
 		<br/>
+		<span class='vidlabel'>In album: </span>
+		<?php if($currentalbum ==""){
+			echo "no album";
+			}else{
+			echo "<a href='album.php?albumID=" . $currentAlbumID . "'>" . $currentalbum . "</a>";
+			}
+		?>
+			<br/>
 		<span class='vidlabel'>Caption file:</span> <?php echo $caption; ?><br/>
 		<span class='vidlabel'>Format:</span> <?php echo $format; ?><br/>
 		<span class='vidlabel'>Original Filename:</span> <?php echo $origfilename; ?><br/>
 		<span class='vidlabel'>Views:</span> <?php echo $viewcount; ?><br/>
 		<a href='media.php?id=<?php echo $mediaID; ?>' target='_blank'>Display Media Page</a>
 	</div>
-	<br/>
-		
-		
+	<br/>		
     </div>
     
     
     <!--ALBUM-->
     <div id="pane2" class="tab-pane">
       <div class='span8' style="min-height:300px;">
-      <p class='notes'>Select to include in an album. <br/>Select 'No album' to remove from all albums.</p>
-      <form>
+      <p class='notes'>Select to include in an album. <br/>
+      Media inherits permissions and poster image of album.<br/>
+      Select 'No album' to remove from all albums.</p>
+      <form id='albumform' method='post' action='edit/changeAlbum.php'>
+      	<input type='hidden' name='mediaID' value='<?php echo $mediaID; ?>'/>
    		<table style='width:100%;'>
    		<tr>
    		
    		<?php
-   		//current album assignments - place in array
-   		$currentalbums[]=array();
-   		$stmt = $db->prepare("SELECT av.albumID,a.album FROM albummedia av LEFT JOIN albums a
-	ON av.albumID = a.albumID WHERE av.mediaID = :mediaID");
-			$stmt->execute(array(':mediaID'=> $mediaID));
-			$row_count = $stmt->rowCount();
-			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {      
-				$currentalbums[] =  $row['album'];
-				if($row['album'] == 'PSU Only'){$psualbum = 'yes';}
-			}
-			
-		echo "<td><input type='radio' name='album' id='album0' value=0 onClick='changeAlbum(0)'";
-   		if($row_count < 1){
+   		//no album option
+		echo "<td><input type='radio' name='albumID' id='album0' value=0 onClick='changeAlbum()'";
+   		if($is_in_album < 1){//check this box if media is not in album
    			echo " checked";
    			}
    		echo "> No album</td>";
    
 		//list of all albums with radio buttons
 		//mark checked if this video in album
-		//onclick() ajax call to make DB change
+		//oncheck of album submit() form
 		$stmt = $db->prepare("SELECT * FROM albums ORDER BY album");
 		$stmt->execute();
 		$result = $stmt->fetchAll();
 		$i=2;
 		foreach( $result as $row ) {
-		echo "<td><input type='radio' name='album' id='album" . $i ."' value='" . $row['albumID'] . "' onClick='changeAlbum(" . $row['albumID'] . ")'";
-			if(in_array($row['album'],$currentalbums)){
+		echo "<td><input type='radio' name='albumID' id='album" . $i ."' value='" . $row['albumID'] . "' onClick='changeAlbum()'";
+			if($row['album']==$currentalbum){
 				echo "checked> ";
 			}else{ 
 				echo "> ";
@@ -289,25 +303,74 @@ jwplayer("mediaspace").setup({
    
     <!--PERMISSION-->
     <div id="pane3" class="tab-pane">
-	<div class="span8">
-      Restricted access permissions are set at the album level. Create an album and assign the desired permissions. Add media to that album.
+	<div class="span11 notes">
+      Permissions for media are inherited from album settings. Generally permissions should be set at the album level. Make changes here only if the media is not in an album or you wish to override the album permissions.
+      
       <br/><br/>
-       <small class='vidlabel'>
-       <ul>
-       <li>Permission on an album can be set to "public", "PSU", or "restricted".</li>
-       <li>Public can be viewed by all.</li>
-       <li>PSU can be viewed by all who can login through WebAccess.</li>
-       <li>Restricted can be viewed by listed PSU ID's.</li>
-       <li>Media is "public" by default.</li>
-       </ul>
-       </small> 
+    <?php
+    //display if in an album 
+    if($currentAlbumID > 0){
+       echo "This media is included in the <span class='green'>" . $currentalbum . "</span> album with permissions set to <span class='green'>" . $albumPermission . "</span>.";
+      }else{
+      echo "This media is not in an album.";
+      } 
+      ?>
+      <hr/>
+      </div>
+      
+      <div class="span6">
+       <form id="permissionForm" method='POST' action='changePermission.php'>
+       <input type='hidden' name='mediaID' value='<?php echo $mediaID; ?>'/>
+       	Public <input type="radio" name="permission" id="public" value="public" 
+    <?php if($permission=='public'){echo "checked='checked'";} ?>/>&nbsp;&nbsp;&nbsp;
+    	PSU <input type="radio" name="permission" id="psu" value="psu" 
+    <?php if($permission=='psu'){echo "checked='checked'";} ?>/>&nbsp;&nbsp;&nbsp;
+    	Restricted <input type="radio" name="permission" id="restricted" value="restricted" <?php if($permission=='restricted'){echo "checked='checked'";} ?>/>&nbsp;&nbsp;&nbsp;
+    	<?php
+    	//display album button if in an album 
+    	if($currentAlbumID > 0){?>
+    	Album <input type="radio" name="permission" id="album" value="album" <?php if($permission=='album'){echo "checked='checked'";} ?>/>&nbsp;&nbsp;&nbsp;
+    	<?php } ?>
+       Hide <input type="radio" name="permission" id="hide" value="hidden" <?php if($permission=='hidden'){echo "checked='checked'";} ?>/><br/><br/>
+       <label for='useraccessID' class='vidlabel'>If restricted add PSU user ID's separated by commas.</label>
+       <textarea id='useraccessID' name='useraccessID' style='width:400px;'> </textarea><br/>
+       <label for='add' style="display:inline;" class='vidlabel'>Add to list: </label>
+       <input id='add' type='radio' name='overwrite' value='add' checked="checked">
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <label for='overwrite' style="display:inline;" class='vidlabel'>Overwrite existing: </label>
+       <input id='overwrite' type='radio' name='overwrite' value='overwrite'><br/><br/>
+       <a href="#" class="btn" onClick="changePermission()";/>Save Changes</a>
+       </form>
+    
        </div>
        
        <!--right column-->
-   		<div class="span3">
+   		<div class="span5">
    		
-   			<a href='createAlbum.php?mediaID=<?php echo $mediaID; ?>' class="btn btn-success"><i class="icon-plus icon-white"> </i> Create New Album</a>	
+   			<small class='vidlabel'>
+       <ul>
+       <li>Permission can be set to "public", "PSU", "restricted", or "hide" and will override album settings.</li>
+       <li>Public can be viewed by all.</li>
+       <li>PSU can be viewed by all who can login through WebAccess.</li>
+       <li>Restricted can be viewed by listed PSU ID's.</li>
+       <li>Album inherits permissions from album setting.</li>
+       <li>Hide blocks viewing regardless of album settings.</li>
+       </ul>
+       </small> 
     	</div>
+    	<div id="permissionResponse" class="row span11">
+    	<?php
+    	if($permission=='restricted'){
+    	echo "Current access ID's:<br/>";
+	$stmt = $db->prepare("SELECT userID FROM mediapermission WHERE mediaID = :mediaID");
+			$stmt->execute(array(':mediaID'=> $mediaID));
+			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {      
+				echo $row['userID'] . ", ";
+			}
+		}
+		?>	
+    	</div>
+    	<br/><br/> <br/><br/> 
   </div><!--close permission tab-->
     
     
@@ -337,7 +400,7 @@ jwplayer("mediaspace").setup({
      <div class="span4 offset1">
      <small>
      <strong class='vidlabel'>Caption File Type</strong><br/>
-     Uploaded caption files must have the extension .srt. This is a common timestamped file used for captioning.
+     Uploaded caption files must have the extension .srt or .vtt. These are the most common timestamped files used for captioning.
      </small>
      <br/><br/>
      	<div id="captionResponse" style="color:red;">
@@ -353,7 +416,7 @@ jwplayer("mediaspace").setup({
                   
     </div><!--close caption tab-->
     
-    <!--TITLE IMAGE-->
+    <!--POSTER IMAGE-->
     <div id="pane5" class="tab-pane">
     <?php
     if($type == 'audio'){ ?>
@@ -362,7 +425,7 @@ jwplayer("mediaspace").setup({
     <div class="span5">
     <?php	
       	if($posterimage==0){
-    	echo"<p>Currently this video uses the default background image.</p>";
+    	echo"<p>Currently this video uses the default or album poster image.</p>";
     	}else{
     	echo"<img src='playerimage/thumbs/" . $mediaID . ".jpg' align='left'/>";
     	echo "<p>Currently a custom image is available. This file can be overwritten with a newly uploaded file if changes are needed.</p>";
@@ -371,7 +434,7 @@ jwplayer("mediaspace").setup({
       	<form id="posterimage" action="edit/writePosterimage.php" method="POST" enctype="multipart/form-data">
      	 	<input type='hidden' name='mediaID' value='<?php echo $mediaID; ?>'/>
       
-            <label for="selectimage" class='vidlabel'>Upload File</label>
+            <label for="selectimage" class='vidlabel'>Select File</label>
             <input type="file" name="image_file" id="selectimage"/><br/><br/>
             <button type="submit" class="btn btn-success"/><i class='icon-plus icon-white'></i> UPLOAD IMAGE FILE</button>
             <br/><br/>
@@ -381,10 +444,10 @@ jwplayer("mediaspace").setup({
         
         </div>
         
-    	<div class="span3 offset1">
-     		<small>
+    	<div class="span5 offset1">
+     		<small class="notes">
      		<strong class='vidlabel'>Image Size</strong><br/>
-     The uploaded image should be the same size as the video. Standard format video is 480(w) X 360(h). Wide format video is 640(w) X 360(h).
+     The uploaded image should be the same aspect ratio as the video.<br/><br/> Standard format video aspect ratio is 4:3. <br/>720(w) X 540(h) is an optimal standard format size.<br/><br/> Wide format aspect ratio is 16:9.<br/> 960(w) X 540(h) is an optimal wide format size.
      		</small><br/><br/>
      <?php
      if($posterimage==1){		
@@ -452,7 +515,11 @@ jwplayer("mediaspace").setup({
     
     <script src="assets/js/jquery.js"></script>        
     <script src="assets/js/bootstrap.js"></script>
-    
+    <script>
+    	//show pane of passed variable
+    	var pane = 'tabdivs a[href="#' +showpane+ '"]';
+    	$('#' + pane).tab('show');
+    </script>
 
 </body>
 </html>

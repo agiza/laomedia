@@ -59,6 +59,12 @@ label{
 	font-size:.5em;
 	}
 	
+.albumForms{
+	font-size:1.4em;
+	background-color:#F7F7F7;
+	padding:8px;
+	}
+	
 .smaller{
 	font-size:.8em;
 	}
@@ -68,7 +74,15 @@ label{
 	}
 	
 .ajaxResponse{
-	color:#54AA54;
+	color:#54A954;
+	}
+	
+.green{
+	color:#54A954;
+	}
+	
+.red{
+	color:#E02F25;
 	}
 	
 .tab-pane textarea{

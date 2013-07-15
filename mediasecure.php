@@ -1,5 +1,6 @@
 <?php
 //VALIDATE USER - returns $userID
+//this include file will block any without webaccess login
 include "validateUser.php";
 
 include "dbconnect.php";
@@ -16,52 +17,31 @@ if(!is_numeric($mediaID)){
 	exit();
 	}
 
-$allowed = 1; //set default album permission
+$albumAllow = 1; //set default album permission
 
 //IS VIDEO IN ALBUM WITH RESTRICTED ACCESS?
-//IF IN ANY ALBUM WITH PUBLIC ACCESS - ACCESS GRANTED 
 $stmt = $db->prepare("SELECT albummedia.albumID, albums.album, albums.permission FROM albummedia LEFT JOIN albums ON albummedia.albumID = albums.albumID WHERE albummedia.mediaID = :mediaID");
 			$stmt->execute(array(':mediaID'=> $mediaID));
-			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
 			$albumID =  $row['albumID'];
 				//IF ALBUM PERMISSION RESTRICTED 
 				if($row['permission'] == 'restricted'){
-					$allowed=0;//set flag to restricted
+					$albumAllow=0;//set flag to restricted
 					//DOES THIS USER HAVE PERMISSION?
 					$stmt2 = $db->prepare("SELECT userID FROM albumpermission WHERE albumID=:albumID AND userID=:userID");
 					$stmt2->execute(array(':albumID'=> $albumID, ':userID'=>$userID));
 					$row2 = $stmt2->fetch();
 					if($stmt2->rowCount() > 0){
 						//this user has permission
-						$allowed=1;
-						break;
+						$albumAllow=1;					
 					}
-				}elseif($row['permission'] == 'public'){
-						$allowed=1;
-						break;
-				}elseif($row['permission'] == 'psu'){//any validated user has access
-						$allowed=1;
-						break;
-				}		
-			}
-
+				}
 			
-if($allowed == 0){
-	echo"<div style='text-align:center;margin-top:150px;'>This video has restricted viewing access.</div>";
-	exit();
-}
-
-
 //GET VIDEO INFO
 $stmt = $db->prepare("SELECT * FROM media WHERE mediaID=:mediaID");
 $stmt->execute(array(':mediaID'=> $mediaID));
 $row = $stmt->fetch();
 $title = $row['title'];
-$description = $row['description'];
-$tags = $row['tags'];
-$origfilename = $row['filename'];
-$uploaddate = $row['uploaddate'];
-$owner = $row['owner'];//userID of one who uploaded file
 $type = $row['type'];//is multi bitrate available?
 $permission = $row['permission'];//get permissions - public or limited?
 $caption = $row['caption'];//are captions available?
@@ -69,6 +49,25 @@ $format = $row['format'];
 $size = $row['size'];
 $posterimage = $row['posterimage'];//poster image uploaded or use default?
 $viewcount = $row['viewcount'] + 1;
+
+//CHECK VIDEO PERMISSIONS
+if(($permission == 'album') && ($albumAllow == 0)){
+	echo"<div style='text-align:center;margin-top:150px;'>This video has restricted viewing access.</div>";
+	exit();
+}elseif($permission == 'hidden'){
+	echo"<div style='text-align:center;margin-top:150px;'>This video has restricted viewing access.</div>";
+	exit();
+}elseif($permission == 'restricted'){
+	//DOES THIS USER HAVE PERMISSION?
+	$stmt = $db->prepare("SELECT userID FROM mediapermission WHERE mediaID=:mediaID AND userID=:userID");
+	$stmt->execute(array(':mediaID'=> $mediaID, ':userID'=>$userID));
+		$row2 = $stmt->fetch();
+		if($stmt->rowCount() == 0){
+		echo"<div style='text-align:center;margin-top:150px;'>This video has restricted viewing access.</div>";
+		exit();				
+		}
+}
+
 
 	
 //set player size

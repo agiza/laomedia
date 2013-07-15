@@ -6,14 +6,14 @@ Running this deletes all information in any existing tables. As a precaution com
 
 /*
 UNCOMMENT SECTION BELOW TO CREATE TABLES
-AFTER RUNNING THIS SCRIPT FROM BROWSER RECOMMENT AS SAFEGUARD AGAINST DATA DELETION
+AFTER RUNNING THIS SCRIPT FROM BROWSER RE-COMMENT AS SAFEGUARD AGAINST DATA DELETION
 OR REMOVE THIS FILE COMPLETELY 
 */
 
-/*
+
 include "../dbconnect.php";
 
-
+/*
 //CREATE USERS TABLE
 $dropTable = $db->prepare('DROP TABLE IF EXISTS users');
 $dropTable->execute();
@@ -39,6 +39,17 @@ $createTable->execute();
 $alterTable = $db->exec("ALTER TABLE media auto_increment=1000");
 
 echo"<h3>A new 'media' table has been created.</h3><br/>";
+
+
+//CREATE mediapermission TABLE
+//what userID's can view videos in this album
+$dropTable = $db->prepare('DROP TABLE IF EXISTS mediapermission');
+$dropTable->execute();
+
+$createTable = $db->prepare('CREATE TABLE mediapermission (mediaID int, userID varchar(10))');
+$createTable->execute();
+
+echo"<h3>A new 'mediapermission' table has been created.</h3><br/>";
 
 
 //CREATE albums TABLE

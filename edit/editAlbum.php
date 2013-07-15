@@ -76,10 +76,14 @@ $albumID = $p_albumID;
     <div id="middlecontent2" class="row">
     
     <br/>
-    <div class='sectiontitle offset1'>Edit Album Properties</div>
-    <br/>
+    
+    <div class='sectiontitle span9 offset1'>
+    Edit <?php echo $album; ?> Album Properties</div>
+    <div class="span2">
+    <a href="../album.php?albumID=<?php echo $albumID; ?>" class="btn btn-small">Return to album listing</a></div>
+    <br/><br/>
       <div class='span6 offset1'>
-			<form class='form-inline' method='post' action='writeEditAlbum.php' style='font-size:1.4em;'>
+			<form class='form-inline albumForms' method='post' action='writeEditAlbum.php'>
 			<input type='hidden' name='albumID' value='<?php echo $albumID; ?>'/>
 			<label for='album' class='vidlabel' style='display:inline;'>Name:</label>
 			<input id='album' name='album' value='<?php echo $album; ?>' style="width:300px;"/>
@@ -134,11 +138,11 @@ $albumID = $p_albumID;
 		&nbsp;&nbsp;&nbsp;
                 <a href="../album.php?albumID=<?php echo $albumID; ?>" class="btn">Cancel</a><br/>
 		</form>
-
+<br/>
 <!--UPLOAD IMAGE-->
-		<form method="post" enctype="multipart/form-data" action="uploadAlbumImage.php">
+<legend>Poster Image for this Album</legend>
+		<form class="albumForms" method="post" enctype="multipart/form-data" action="uploadAlbumImage.php">
 		<input type='hidden' name='albumID' value='<?php echo $albumID; ?>'/>
-		<legend>Poster Image for this Album</legend>
 		<?php
 		if($posterimage==1){
 			echo "<img src='../playerimage/thumbs/album" . $albumID . ".jpg' style='float:left;margin-right:.3em;'>";
@@ -176,10 +180,11 @@ $albumID = $p_albumID;
        <li>PSU can be viewed by all who can login through WebAccess.</li>
        <li>Restricted can be viewed by listed PSU ID's.</li>
        <li>User list can be populated with a course roster by entering a Course ID#.</li>
+       <li>Media in album inherit these permissions unless overridden.</li>
        </ul>
        <strong>Album Image</strong>
        <ul class='notes'>
-       <li>Uploaded image will be the poster image for all videos in this album.</li>
+       <li>Uploaded image will be the poster image for all videos in this album unless overridden at the video level.</li>
        </ul>
        
        <?php

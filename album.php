@@ -58,14 +58,11 @@ $albumID = $p_albumID;
 		$description = stripslashes($row['description']);
 		$permission = $row['permission'];
 	
-	//get count & mediaID's
-	$stmt = $db->prepare("SELECT * FROM albummedia WHERE albumID = $albumID");
-		$stmt->execute();		
-		$videocount = $stmt->rowCount(); 
-		$result = $stmt->fetchAll();
-		foreach($result as $row){
-			$media[]=$row['mediaID'];
-		} 
+	$stmt = $db->prepare("SELECT albummedia.albumID, media.mediaID, media.title, media.description,media.permission,media.caption,media.viewcount FROM albummedia LEFT JOIN media ON albummedia.mediaID = media.mediaID WHERE albummedia.albumID = :albumID ORDER BY media.title ASC");
+$stmt->execute(array(':albumID'=> $albumID));
+$videocount = $stmt->rowCount(); 
+$result = $stmt->fetchAll();
+		
     ?>
     	<div class='span8 offset1'>
     	<br/>
@@ -82,37 +79,39 @@ $albumID = $p_albumID;
 			
 			</div>
 			<div class="notes indent"><?php echo $description; ?></div>
+			<div class="notes indent">Permission: <?php echo $permission; ?></div>
+			<div class="notes indent"><span class="red"># </span>indicates album permissions overridden.</div>
 		</div>
 		
 		<div class='span3'>
 		<br/>
 		<?php
-		if($albumID != 1){
+		if($albumID != 1){//no editing of PSU albumID=1
 			echo "<a href='edit/editAlbum.php?albumID=" . $albumID . "' class='btn btn-info'>Edit Album Properties</a>";
 			}
 		?>
 			
 		</div>
-			
-		
+					
 		<br/><br/>
 		
-    
-    
-    
+        
     <div class="row span10 offset1" style='margin-top:1em;'>
      <table class="table table-striped">
-        <tr><th>Title</th><th>Description</th><th>Upload Date</th><th>Views</th></tr>
+        <tr><th>ID #</th><th>Title</th><th>Description</th><th>Caption</th><th>Views</th></tr>
     <?php
-  		foreach($media as $val){
-    		$stmt = $db->prepare("SELECT * FROM media WHERE mediaID = $val");
-			$stmt->execute();
-			$row = $stmt->fetch();
+  		foreach($result as $row){
+			//echo $row['title'] . "<br/>";
+		
    
 		$uploaddate =  date('m/d/Y',$row['uploaddate']);
 		
 		 
-			echo "<tr><td>" . "<a href='settings.php?vid=" . $row['mediaID'] . "'>" . $row['title'] . "</a></td><td>" . $row['description'] . "</td><td>" . $uploaddate . "</td>";
+			echo "<tr><td>" . $row['mediaID'] . "</td><td>";
+			if($row['permission'] != 'album'){
+				echo"<span class='red'># </span>";
+				}
+			echo "<a href='settings.php?vid=" . $row['mediaID'] . "'>" . $row['title'] . "</a></td><td>" . $row['description'] . "</td>";
 			if($row['caption'] != 'none'){
 				echo "<td>&nbsp;&nbsp; <i class='icon-ok'></i></td>";
 			}else{

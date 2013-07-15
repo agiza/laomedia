@@ -17,10 +17,13 @@ if(!is_numeric($mediaID)){
 //IS VIDEO IN ALBUM WITH RESTRICTED ACCESS
 $stmt = $db->prepare("SELECT albummedia.albumID, albums.album, albums.permission FROM albummedia LEFT JOIN albums ON albummedia.albumID = albums.albumID WHERE albummedia.mediaID = :mediaID");
 			$stmt->execute(array(':mediaID'=> $mediaID));
-			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-				//IF ALBUM PERMISSION RESTRICTED REDIRECT TO HTTPS
+			$row = $stmt->fetch(PDO::FETCH_ASSOC); 
+			//IF ALBUM PERMISSION RESTRICTED REDIRECT TO HTTPS
+			if(isset($row['permission'])){
 				if($row['permission'] != 'public'){
-					header("Location: https://" . $server . "/mediaframesecure.php?id=" . $mediaID);
+					//header("Location: https://" . $server . "/mediasecure.php?id=" . $mediaID);
+					//local install
+					header("Location:mediaframesecure.php?id=" . $mediaID);
 				}
 			}
 
@@ -31,11 +34,25 @@ $stmt->execute(array(':mediaID'=> $mediaID));
 $row = $stmt->fetch();
 $title = $row['title'];
 $type = $row['type'];//is multi bitrate available?
+$permission = $row['permission'];//get permissions - public or limited?
 $caption = $row['caption'];//are captions available?
 $format = $row['format'];
 $size = $row['size'];
 $posterimage = $row['posterimage'];//poster image uploaded or use default?
 $viewcount = $row['viewcount'] + 1;
+
+//CHECK VIDEO PERMISSION
+if(($permission == 'public') || ($permission == 'album')){
+	//show video
+}elseif($permission == 'hidden'){
+	echo"<div style='text-align:center;margin-top:150px;'>This video has restricted viewing access.</div>";
+	exit();
+}else{	
+	//redirect to secure page
+	//header("Location: https://" . $server . "/mediasecure.php?id=" . $mediaID);
+	//local install
+	header("Location:mediaframesecure.php?id=" . $mediaID);
+}
 	
 //set player size
 include "functions/playersize.php";
@@ -56,7 +73,7 @@ $db=null;
                                      
 </head>
 
-<body>
+<body style='margin:0;padding:0;'>
 <div id='mediaspace' style="margin:0px;padding:0px;border:none;"></div>
 <script type="text/javascript">
 	jwplayer("mediaspace").setup({
@@ -72,7 +89,8 @@ $db=null;
     			echo '{file: "rtmp://' . $server . $wowzaport . $videocontent . 'mp4:' . $mediaID . '.mp4"},';
     			echo '{file: "http://' . $server . $wowzaport . $videocontent . 'mp4:' .$mediaID . '.mp4/playlist.m3u8"}';
     		}elseif($type == 'audio'){
-    			echo'{file: "audio/' . $mediaID . '.mp3"}';
+    			echo '{file: "rtmp://' . $server . $wowzaport . $videocontent . 'mp3:' . $mediaID . '.mp3"},';
+    			echo '{file: "http://' . $server . $wowzaport . $videocontent . 'mp3:'  . $mediaID . '.mp3/playlist.m3u8"}';
     		}
     		?>    		    
 		]
