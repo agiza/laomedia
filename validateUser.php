@@ -18,6 +18,7 @@ THIS CAN BE USED TO MASQUERADE AS ANOTHER USER WITHIN THE SOFTWARE
 
 $userID = "admin";//comment out this line when using Cosign
 $userID = "srt142";
+//$userID = "int444";
 
 $userID=strtolower($userID);
 

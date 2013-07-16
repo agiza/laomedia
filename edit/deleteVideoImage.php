@@ -3,7 +3,12 @@
 //THIS PAGE CALLED BY FORMAT/IMAGE FORM ON SETTINGS.PHP PAGE
 //AJAX CALL ONCLICK RADIO BUTTON
 
+//VALIDATE USER - returns $userID
+include "../validateUser.php";
+
 include "../dbconnect.php";
+
+include "../validateContributor.php";
 
 //IMPORT VARIABLE assessmentID
 import_request_variables("pg","p_");
@@ -20,7 +25,7 @@ $videoposterimage="../playerimage/" . $mediaID . ".jpg";
 	if (!chmod($videoposterimage,0777)){echo "No file found.</br>";}
 	unlink($videoposterimage);
 	//DELETE THUMBNAIL
-	$videoposterimage="../playerimage//thumbs/" . $mediaID . ".jpg";
+	$videoposterimage="../playerimage/thumbs/" . $mediaID . ".jpg";
 	if (!chmod($videoposterimage,0777)){echo "No file found.</br>";}
 	unlink($videoposterimage);
 

@@ -133,11 +133,13 @@ include "playerConfig.php";
 		//format player on this page
 		if($format == 'standard'){
 			$height = 225;
-		}else{
+		}elseif($format == 'wide'){
 			$height = 170;
+		}elseif($type == 'audio'){
+			$height = 26;
 			}
 			
-			$width = "300px";
+		$width = "300px";
 	?>
 	
 			

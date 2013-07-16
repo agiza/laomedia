@@ -4,7 +4,7 @@ include "validateUser.php";
 
 include "dbconnect.php";
 
-include "validateContributor.php";
+include "validateInstructor.php";
 
 //IMPORT VARIABLE assessmentID
 import_request_variables("pg","p_");
@@ -86,9 +86,12 @@ $result = $stmt->fetchAll();
 		<div class='span3'>
 		<br/>
 		<?php
-		if($albumID != 1){//no editing of PSU albumID=1
-			echo "<a href='edit/editAlbum.php?albumID=" . $albumID . "' class='btn btn-info'>Edit Album Properties</a>";
+		//no album editing for instructors or of PSU albumID=1
+		if($role != 'instructor'){
+			if($albumID != 1){
+				echo "<a href='edit/editAlbum.php?albumID=" . $albumID . "' class='btn btn-info'>Edit Album Properties</a>";
 			}
+		}
 		?>
 			
 		</div>

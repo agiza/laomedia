@@ -27,7 +27,7 @@ $stmt = $db->prepare("SELECT albummedia.albumID, albums.album, albums.permission
 					header("Location:mediasecure.php?id=" . $mediaID);
 				}
 			}
-			
+
 
 //GET VIDEO INFO
 $stmt = $db->prepare("SELECT * FROM media WHERE mediaID=:mediaID");
@@ -42,18 +42,20 @@ $size = $row['size'];
 $posterimage = $row['posterimage'];//poster image uploaded or use default?
 $viewcount = $row['viewcount'] + 1;
 
+if($stmt->rowCount() > 0){//video ID exists
 //CHECK VIDEO PERMISSION
-if(($permission == 'public') || ($permission == 'album')){
-	//show video
-}elseif($permission == 'hidden'){
-	echo"<div style='text-align:center;margin-top:150px;'>This video has restricted viewing access.</div>";
-	exit();
-}else{	
+	if(($permission == 'public') || ($permission == 'album')){
+		//show video
+	}elseif($permission == 'hidden'){
+		echo"<div style='text-align:center;margin-top:150px;'>This video has restricted viewing access.</div>";
+		exit();
+	}else{	
 	//redirect to secure page
 	//header("Location: https://" . $server . "/mediasecure.php?id=" . $mediaID);
 	//local install
 	header("Location:mediasecure.php?id=" . $mediaID);
 	}
+}
 	
 //set player size
 include "functions/playersize.php";
@@ -105,15 +107,16 @@ $db=null;
 			<img id="laoMedia" src="assets/img/laoMedia.png" alt="Liberal Arts Online Media" />
 		</div>
 	</div>
+	
 
 	<div id="middlecontent2" class="row">
 	
-	<?php // no file found
+<?php // no file found
 	if($stmt->rowCount() == 0){
 		echo "<div style='width:640px;height:500px;margin:0 auto;text-align:center'> <h2>No media with this ID# was found.</div>";
 	}else{	
 ?>
-	
+
 	<div style="margin:0px auto;padding:0px;border:none;width:<?php echo $width; ?>px;height:<?php echo $height; ?>px;">
 <div id='mediaspace' style="margin:0px;padding:0px;border:none;"></div>
 <script type="text/javascript">
@@ -126,12 +129,14 @@ jwplayer("mediaspace").setup({
     		if($type == 'multivid'){
     			echo '{file: "http://' . $server . $wowzaport . $videocontent . 'smil:' . $mediaID . '.smil/jwplayer.smil"},';
     			echo '{file: "http://' . $server . $wowzaport . $videocontent . 'mp4:'  . $mediaID . '_hi.mp4/playlist.m3u8"}';
+    		
     		}elseif($type == 'singlevid'){
     			echo '{file: "rtmp://' . $server . $wowzaport . $videocontent . 'mp4:' . $mediaID . '.mp4"},';
     			echo '{file: "http://' . $server . $wowzaport . $videocontent . 'mp4:' .$mediaID . '.mp4/playlist.m3u8"}';
+    		
     		}elseif($type == 'audio'){
     			echo '{file: "rtmp://' . $server . $wowzaport . $videocontent . 'mp3:' . $mediaID . '.mp3"},';
-    			echo '{file: "http://' . $server . $wowzaport . $videocontent . 'mp3:'  . $mediaID . '.mp3/playlist.m3u8"}';
+    			echo '{file: "http://' . $server . $wowzaport . $videocontent . 'mp4:'  . $mediaID . '_hi.mp4/playlist.m3u8"}';
     		}
     		?>    		    
 		]
@@ -177,7 +182,10 @@ jwplayer("mediaspace").setup({
 
 	</div>
 	
-	<?php}//close conditional?>
+<?php
+}//close conditional
+?>
+
 	
 </div>
 

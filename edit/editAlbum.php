@@ -181,6 +181,7 @@ $albumID = $p_albumID;
        <li>Restricted can be viewed by listed PSU ID's.</li>
        <li>User list can be populated with a course roster by entering a Course ID#.</li>
        <li>Media in album inherit these permissions unless overridden.</li>
+       <li><a href="../assets/img/PermissionsChart.jpg" target="_blank">Permissions Flowchart</a></li>
        </ul>
        <strong>Album Image</strong>
        <ul class='notes'>

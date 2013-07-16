@@ -15,6 +15,7 @@ $start = $p_start;
 	$stmt = $db->prepare("SELECT mediaID FROM media");
 	$stmt->execute();
 	$totalMedia = $stmt->rowCount('mediaID');
+	
 ?>
 
 <html>
@@ -52,15 +53,15 @@ $start = $p_start;
     	
     <div id="middlecontent2" class="row">
     <br/>
-    <div class='sectiontitle'>&nbsp;Media Listing
+    <div class='sectiontitle'>&nbsp;&nbsp;Media Listing
     <div style="float:right;"><?php echo $totalMedia; ?> files.&nbsp;&nbsp;</div>
     </div>
     <br/>
         <table class="table table-striped">
-        <tr><th>ID #</th><th>Title</th><th>Description</th><th>Tags</th><th><a href="mediaListingDate.php?start=0">Upload Date</a></th><th>Views</th></tr>
+        <tr><th>ID #</th><th><a href="mediaListing.php?start=0">Title</a></th><th>Description</th><th>Tags</th><th>Upload Date</th><th>Views</th></tr>
     <?php
 		
-	$stmt = $db->prepare("SELECT * FROM media ORDER BY title LIMIT $start,20");
+	$stmt = $db->prepare("SELECT * FROM media ORDER BY uploaddate DESC LIMIT $start,20");
 		$stmt->execute();		
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		$uploaddate =  date('m/d/Y',$row['uploaddate']);
@@ -84,7 +85,7 @@ $start = $p_start;
     	for($i=0;$i<$pages;$i++){
     		$start2=($i * 20);
     		if($start2 != $start){
-    		echo "<a href='mediaListing.php?start=" . $start2 . "'>" . ($i + 1) . "&nbsp;&nbsp;</a>";
+    		echo "<a href='mediaListingDate.php?start=" . $start2 . "'>" . ($i + 1) . "&nbsp;&nbsp;</a>";
     		}else{//no link for page we're on
     			echo ($i + 1) . "&nbsp;&nbsp";
     		}

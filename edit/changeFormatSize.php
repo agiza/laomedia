@@ -1,11 +1,13 @@
 <?php
-
 //THIS PAGE CALLED BY FORMAT/IMAGE FORM ON SETTINGS.PHP PAGE
 //AJAX CALL ONCLICK RADIO BUTTON
 
+//VALIDATE USER - returns $userID
+include "../validateUser.php";
+
 include "../dbconnect.php";
 
-include "../playerConfig.php";
+include "../validateContributor.php";
 
 //IMPORT VARIABLE assessmentID
 import_request_variables("pg","p_");

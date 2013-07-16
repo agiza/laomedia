@@ -57,6 +57,7 @@ include "validateAdmin.php";
 			<!--<option value="student">student</option>-->
 			<option value="admin">admin</option>
 			<option value="contrib">contributor</option>
+			<option value="instructor">instructor</option>
 			</select><br>
 			<button class="btn btn-success" href="#" onclick="location.href='writeNewUser.php'">Register/Edit User</button>
 			<br/>&bull; If user already exists this will update firstname, lastname, and role.
@@ -72,8 +73,8 @@ include "validateAdmin.php";
         $name= $firstname . " " . $lastname;
         echo $name . " (" . $row['userID'] . "), ";
 		}
-	echo "<br/>Admins: ";		
 	
+	echo "<br/>Admins: ";			
 	$stmt = $db->prepare("SELECT * from users WHERE role='admin'");
 	$stmt->execute();
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -83,6 +84,15 @@ include "validateAdmin.php";
         echo $name . " (" . $row['userID'] . "), ";
 	}
 
+	echo "<br/>Instructors: ";
+	$stmt = $db->prepare("SELECT * from users WHERE role='instructor'");
+	$stmt->execute();
+	while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $firstname = $row[firstname];
+        $lastname  = $row[lastname]; 
+        $name= $firstname . " " . $lastname;
+        echo $name . " (" . $row['userID'] . "), ";
+	}
 ?>			
     	</div>
     	

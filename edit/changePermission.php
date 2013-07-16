@@ -4,7 +4,7 @@ include "../validateUser.php";
 
 include "../dbconnect.php";
 
-include "../validateContributor.php";
+include "../validateInstructor.php";
 
 //IMPORT VARIABLE assessmentID
 import_request_variables("pg","p_");
