@@ -80,7 +80,7 @@ $albumID = $p_albumID;
     <div class='sectiontitle span9 offset1'>
     Edit <?php echo $album; ?> Album Properties</div>
     <div class="span2">
-    <a href="../album.php?albumID=<?php echo $albumID; ?>" class="btn btn-small">Return to album listing</a></div>
+    <a href="../album.php?albumID=<?php echo $albumID; ?>&start=0" class="btn btn-small">Return to album listing</a></div>
     <br/><br/>
       <div class='span6 offset1'>
 			<form class='form-inline albumForms' method='post' action='writeEditAlbum.php'>

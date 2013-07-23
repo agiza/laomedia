@@ -46,7 +46,7 @@ echo"<h3>A new 'media' table has been created.</h3><br/>";
 $dropTable = $db->prepare('DROP TABLE IF EXISTS mediapermission');
 $dropTable->execute();
 
-$createTable = $db->prepare('CREATE TABLE mediapermission (mediaID int, userID varchar(10))');
+$createTable = $db->prepare('CREATE TABLE mediapermission (mediaID int index, userID varchar(10))');
 $createTable->execute();
 
 echo"<h3>A new 'mediapermission' table has been created.</h3><br/>";
@@ -72,7 +72,7 @@ echo"<h3>A new 'albums' table has been created.</h3><br/>";
 $dropTable = $db->prepare('DROP TABLE IF EXISTS albummedia');
 $dropTable->execute();
 
-$createTable = $db->prepare('CREATE TABLE albummedia (albumID int, mediaID integer)');
+$createTable = $db->prepare('CREATE TABLE albummedia (albumID int index, mediaID integer)');
 $createTable->execute();
 
 echo"<h3>A new 'albummedia' table has been created.</h3><br/>";
@@ -83,7 +83,7 @@ echo"<h3>A new 'albummedia' table has been created.</h3><br/>";
 $dropTable = $db->prepare('DROP TABLE IF EXISTS albumpermission');
 $dropTable->execute();
 
-$createTable = $db->prepare('CREATE TABLE albumpermission (albumID int, userID varchar(10))');
+$createTable = $db->prepare('CREATE TABLE albumpermission (albumID int index, userID varchar(10))');
 $createTable->execute();
 
 echo"<h3>A new 'albumpermission' table has been created.</h3><br/>";

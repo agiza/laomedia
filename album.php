@@ -11,6 +11,17 @@ import_request_variables("pg","p_");
 
 $albumID = $p_albumID;
 
+if(isset($p_start)){
+	$start = $p_start;//passed value
+}else{
+	$start = 0;//if no value passed start at 0
+}
+
+$stmt = $db->prepare("SELECT mediaID FROM albummedia WHERE albumID = $albumID");
+$stmt->execute();
+$videocount = $stmt->rowCount('mediaID');//total media items
+
+
 ?>
 
 <html>
@@ -58,9 +69,8 @@ $albumID = $p_albumID;
 		$description = stripslashes($row['description']);
 		$permission = $row['permission'];
 	
-	$stmt = $db->prepare("SELECT albummedia.albumID, media.mediaID, media.title, media.description,media.permission,media.caption,media.viewcount FROM albummedia LEFT JOIN media ON albummedia.mediaID = media.mediaID WHERE albummedia.albumID = :albumID ORDER BY media.title ASC");
-$stmt->execute(array(':albumID'=> $albumID));
-$videocount = $stmt->rowCount(); 
+	$stmt = $db->prepare("SELECT albummedia.albumID, media.mediaID, media.title, media.description,media.permission,media.caption,media.viewcount FROM albummedia LEFT JOIN media ON albummedia.mediaID = media.mediaID WHERE albummedia.albumID = :albumID ORDER BY media.title ASC LIMIT $start,20");
+$stmt->execute(array(':albumID'=> $albumID)); 
 $result = $stmt->fetchAll();
 		
     ?>
@@ -130,7 +140,25 @@ $result = $stmt->fetchAll();
     
     </div>
     
-    </div>
+     <?php
+    //create page links
+	$pages = ceil($videocount/20);//total of pages needed for links
+
+    if($videocount > 20){
+    	echo "<div class='span10' style='text-align:center;'>Pages: ";
+    	for($i=0;$i<$pages;$i++){
+    		$start2=($i * 20);
+    		if($start2 != $start){
+    		echo "<a href='album.php?albumID=" . $albumID . "&start=" . $start2 . "'>" . ($i + 1) . "&nbsp;&nbsp;</a>";
+    		}else{//no link for page we're on
+    			echo ($i + 1) . "&nbsp;&nbsp";
+    		}
+    	
+    	}
+    	echo "</div>";
+    }
+    ?>
+    
     
     </div><!--close middlecontent-->
     

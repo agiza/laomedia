@@ -74,12 +74,9 @@ $start = $p_start;
     
     <?php
     //create page links
-    $stmt = $db->prepare("SELECT title FROM media");
-		$stmt->execute();
-		$row_count = $stmt->rowCount();
-		$pages = ceil($row_count/20);//total of pages needed for links
+		$pages = ceil($totalMedia/20);//total of pages needed for links
 		
-    if($row_count > 20){
+    if($totalMedia > 20){
     	echo "<div style='text-align:center;'>Pages: ";
     	for($i=0;$i<$pages;$i++){
     		$start2=($i * 20);
