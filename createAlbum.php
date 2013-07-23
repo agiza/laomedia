@@ -17,7 +17,6 @@ include "dbconnect.php";
     <!-- Le styles -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
     <link href="assets/css/laoMedia.css" rel="stylesheet">
-	<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 
 <!-- CSS adjustments for browsers with JavaScript disabled -->
 	<noscript><link rel="stylesheet" href="../assets/css/jquery.fileupload-ui-noscript.css"></noscript>
@@ -37,8 +36,8 @@ include "dbconnect.php";
 <div class="container">
 	<div class="row">
 		<div id="header">
-			<img id="PSUlogo" src="assets/img/PSUlogo.png" alt="Penn State Logo" />
-			<a href="index.php"><img id="laoMedia" src="assets/img/laoMedia.png" alt="Liberal Arts Online Media" /></a>
+			<img id="PSUlogo" src="assets/img/logo.png" alt="Penn State Logo" />
+			<a href="index.php"><img id="laoMedia" src="assets/img/headGraphic.png" alt="Liberal Arts Online Media" /></a>
 		</div>
 	</div>
 
@@ -46,7 +45,7 @@ include "dbconnect.php";
     <div id="middlecontent2" class="row">
     
     <br/>
-    <div class='sectiontitle offset1'>Create New Album</div>
+    <div class='sectiontitle span8 offset1'>Create New Album</div>
     <br/>
       <div class='span6 offset1'>
 			<form class='form-inline' method='post' action='writeAlbum.php' enctype="multipart/form-data" style='font-size:1.4em;'>

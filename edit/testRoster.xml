@@ -5,9 +5,9 @@
     <user_id>ADH5086</user_id>
     <course_rights>2</course_rights>
     <team>Group-04</team>
-    <fname>ADAM</fname>
+    <lname>FIRSTNAME</lname>
     <mname>DAVID</mname>
-    <lname>HICKS</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -15,9 +15,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-06</team>
-    <fname>ANDREW</fname>
+    <lname>FIRSTNAME</lname>
     <mname>JOSEPH</mname>
-    <lname>FEEHERY</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -25,9 +25,9 @@
     <course_rights>2</course_rights>
     <team>201112FADE___RLER__100_999</team>
     <team>Group-04</team>
-    <fname>ALEXANDER</fname>
+    <lname>FIRSTNAME</lname>
     <mname>JOHN</mname>
-    <lname>POPPE</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -35,9 +35,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-03</team>
-    <fname>ANDREA</fname>
+    <lname>FIRSTNAME</lname>
     <mname>MARIE</mname>
-    <lname>SUTYAK</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -45,18 +45,18 @@
     <course_rights>2</course_rights>
     <team>201112FADE___RLER__100_999</team>
     <team>Group-01</team>
-    <fname>ALLISON</fname>
+    <lname>FIRSTNAME</lname>
     <mname>MARY</mname>
-    <lname>THOMPSON</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
     <user_id>ARD5</user_id>
     <course_rights>32</course_rights>
     <team>201112FAUP___RLER__100_003</team>
-    <fname>AMY</fname>
+    <lname>FIRSTNAME</lname>
     <mname></mname>
-    <lname>DIETZ</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -64,9 +64,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-05</team>
-    <fname>BRIAN</fname>
+    <lname>FIRSTNAME</lname>
     <mname>ANDREW</mname>
-    <lname>DUNN</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -74,9 +74,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-04</team>
-    <fname>BRYANT</fname>
+    <lname>FIRSTNAME</lname>
     <mname>ANDREW</mname>
-    <lname>SEELEY</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -84,18 +84,18 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-06</team>
-    <fname>BILLIE JO</fname>
+    <lname>FIRSTNAME</lname>
     <mname></mname>
-    <lname>KIEL</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
     <user_id>CDH5049ADM</user_id>
     <course_rights>64</course_rights>
     <team>201112FAWS___RLER__100_101</team>
-    <fname>CHRISTOPHER DAVID</fname>
+    <lname>FIRSTNAME</lname>
     <mname></mname>
-    <lname>HIRSH</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -103,9 +103,9 @@
     <course_rights>2</course_rights>
     <team>201112FAAN___RLER__100_901</team>
     <team>Group-01</team>
-    <fname>COLIN</fname>
+    <lname>FIRSTNAME</lname>
     <mname>FREDRICK</mname>
-    <lname>PHELPS</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -113,18 +113,18 @@
     <course_rights>32</course_rights>
     <team>201112FAWS___RLER__100_101</team>
     <team>Faculty</team>
-    <fname>Cathy</fname>
+    <lname>FIRSTNAME</lname>
     <mname></mname>
-    <lname>Holsing</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
     <user_id>CJH15</user_id>
     <course_rights>32</course_rights>
     <team>201112FAWS___RLER__100_101</team>
-    <fname>James</fname>
+    <lname>FIRSTNAME</lname>
     <mname></mname>
-    <lname>Holliman</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -132,9 +132,9 @@
     <course_rights>32</course_rights>
     <team>201112FAWS___RLER__100_101</team>
     <team>Faculty</team>
-    <fname>CHARLES</fname>
+    <lname>FIRSTNAME</lname>
     <mname>L</mname>
-    <lname>LUMPKINS</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -142,9 +142,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-01</team>
-    <fname>CATHERINE</fname>
+    <lname>FIRSTNAME</lname>
     <mname>MARIE</mname>
-    <lname>MCDOWELL</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -152,9 +152,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-01</team>
-    <fname>CATHERINE</fname>
+    <lname>FIRSTNAME</lname>
     <mname>MARY</mname>
-    <lname>PLETCHER</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -162,9 +162,9 @@
     <course_rights>2</course_rights>
     <team>201112FADE___RLER__100_999</team>
     <team>Group-05</team>
-    <fname>DANIELLE</fname>
+    <lname>FIRSTNAME</lname>
     <mname>RENEE</mname>
-    <lname>WILSON</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -172,9 +172,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-02</team>
-    <fname>ELIZABETH</fname>
+    <lname>FIRSTNAME</lname>
     <mname>MARIE</mname>
-    <lname>KANE</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -182,9 +182,9 @@
     <course_rights>2</course_rights>
     <team>201112FAAN___RLER__100_901</team>
     <team>Group-02</team>
-    <fname>EMILY</fname>
+    <lname>FIRSTNAME</lname>
     <mname>SARAH</mname>
-    <lname>WYTTENBACH</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -192,9 +192,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-04</team>
-    <fname>FRANK</fname>
+    <lname>FIRSTNAME</lname>
     <mname></mname>
-    <lname>SHU</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -202,9 +202,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-06</team>
-    <fname>GREGORY</fname>
+    <lname>FIRSTNAME</lname>
     <mname>NEIL</mname>
-    <lname>IVERSEN</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -212,9 +212,9 @@
     <course_rights>2</course_rights>
     <team>201112FAWS___RLER__100_101</team>
     <team>Group-03</team>
-    <fname>GARRY</fname>
+    <lname>FIRSTNAME</lname>
     <mname>RAY</mname>
-    <lname>MUSSELMAN</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -222,9 +222,9 @@
     <course_rights>2</course_rights>
     <team>201112FAWS___RLER__100_101</team>
     <team>Group-02</team>
-    <fname>JOHN</fname>
+    <lname>FIRSTNAME</lname>
     <mname>HARVEY</mname>
-    <lname>SHULTZ</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -232,9 +232,9 @@
     <course_rights>2</course_rights>
     <team>201112FADE___RLER__100_999</team>
     <team>Group-02</team>
-    <fname>JASMINE</fname>
+    <lname>FIRSTNAME</lname>
     <mname>P</mname>
-    <lname>HUNTER</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -242,9 +242,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-05</team>
-    <fname>KATIE</fname>
+    <lname>FIRSTNAME</lname>
     <mname>JILL</mname>
-    <lname>DENGLER</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -252,18 +252,18 @@
     <course_rights>2</course_rights>
     <team>201112FAWS___RLER__100_101</team>
     <team>Group-05</team>
-    <fname>KRISTY</fname>
+    <lname>FIRSTNAME</lname>
     <mname>LEAH</mname>
-    <lname>RANOCCHIA</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
     <user_id>KMS60</user_id>
     <course_rights>32</course_rights>
 <team></team>
-    <fname>Kurtis M</fname>
+    <lname>FIRSTNAME</lname>
     <mname></mname>
-    <lname>Steele</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -271,9 +271,9 @@
     <course_rights>2</course_rights>
     <team>201112FAMK___RLER__100_999</team>
     <team>Group-05</team>
-    <fname>KARIN</fname>
+    <lname>FIRSTNAME</lname>
     <mname>G</mname>
-    <lname>BOTTI</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -281,9 +281,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-01</team>
-    <fname>LAUREN</fname>
+    <lname>FIRSTNAME</lname>
     <mname>ALEXA</mname>
-    <lname>GREEN</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -291,9 +291,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-02</team>
-    <fname>LESLIE</fname>
+    <lname>FIRSTNAME</lname>
     <mname></mname>
-    <lname>DALTON</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -301,9 +301,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-05</team>
-    <fname>MELISSA</fname>
+    <lname>FIRSTNAME</lname>
     <mname>ANN</mname>
-    <lname>MAMIGONIAN</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -311,9 +311,9 @@
     <course_rights>2</course_rights>
     <team>201112FADE___RLER__100_999</team>
     <team>Group-02</team>
-    <fname>MICHAEL</fname>
+    <lname>FIRSTNAME</lname>
     <mname>DARREN</mname>
-    <lname>LEE</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -321,9 +321,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-02</team>
-    <fname>NICHOLAS</fname>
+    <lname>FIRSTNAME</lname>
     <mname>RICHARD</mname>
-    <lname>HEGEDUS</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -331,9 +331,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-02</team>
-    <fname>NEERAJ</fname>
+    <lname>FIRSTNAME</lname>
     <mname></mname>
-    <lname>KUMAR</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -341,9 +341,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-04</team>
-    <fname>RYAN</fname>
+    <lname>FIRSTNAME</lname>
     <mname>ALAN</mname>
-    <lname>BOSTDORF</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -351,9 +351,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-06</team>
-    <fname>RYAN</fname>
+    <lname>FIRSTNAME</lname>
     <mname>FRANCIS</mname>
-    <lname>MCGARVEY</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -361,9 +361,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-03</team>
-    <fname>RONALD</fname>
+    <lname>FIRSTNAME</lname>
     <mname>JAMES</mname>
-    <lname>THOMPSON</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -371,18 +371,18 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-03</team>
-    <fname>RYAN</fname>
+    <lname>FIRSTNAME</lname>
     <mname>MICHAEL</mname>
-    <lname>YOEST</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
     <user_id>SIA5101</user_id>
     <course_rights>2</course_rights>
     <team>Group-06</team>
-    <fname>SAUDA</fname>
+    <lname>FIRSTNAME</lname>
     <mname>ISLAM</mname>
-    <lname>ANIMA</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -390,9 +390,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-03</team>
-    <fname>SCOTT</fname>
+    <lname>FIRSTNAME</lname>
     <mname>MICHAEL</mname>
-    <lname>TIMPANI</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -400,9 +400,9 @@
     <course_rights>2</course_rights>
     <team>201112FAAN___RLER__100_901</team>
     <team>Group-04</team>
-    <fname>SUSAN</fname>
+    <lname>FIRSTNAME</lname>
     <mname>X</mname>
-    <lname>LE</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
   <member>
@@ -410,9 +410,9 @@
     <course_rights>2</course_rights>
     <team>201112FAUP___RLER__100_003</team>
     <team>Group-06</team>
-    <fname>VICTORIA</fname>
+    <lname>FIRSTNAME</lname>
     <mname>ASHLY</mname>
-    <lname>LOBIONDO</lname>
+    <lname>LASTNAME</lname>
     <confidential>0</confidential>
   </member>
 </roster></success></result>

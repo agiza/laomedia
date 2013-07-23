@@ -29,6 +29,8 @@ Edit playerConfig.php
 		
 	In our setup an alias for the Wowza 'content' directory has been placed in the same directory as the interface files(/var/www/html).
 
+The header graphics are located in assets/img and are called logo.png and headGraphic.png. Overwrite these with your own image of similar size for customization.
+
 	
 Use
 
