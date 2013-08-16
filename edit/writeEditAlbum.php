@@ -37,7 +37,7 @@ if($overwrite == 'overwrite'){
 //IF THERE IS A COURSEID RUN syncRoster.php ON ANGEL API
 if ($courseID != null){
 	//GET ANGEL API XML FILE
-   // $feedURL = "https://cms.psu.edu/api/default.asp?APIACTION=PSU_TEAMLISTXML2&STRCOURSE_ID=" . $angelID . "&APIUSER=USER&APIPWD=PWD";
+   // $feedURL = "https://cms.psu.edu/api/default.asp?APIACTION=PSU_TEAMLISTXML2&STRCOURSE_ID=" . $courseID . "&APIUSER=USER&APIPWD=PWD";
     $feedURL = "testRoster.xml";
     
     // read feed into SimpleXML object

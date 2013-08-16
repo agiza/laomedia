@@ -86,7 +86,7 @@ $albumID = $p_albumID;
 			<form class='form-inline albumForms' method='post' action='writeEditAlbum.php'>
 			<input type='hidden' name='albumID' value='<?php echo $albumID; ?>'/>
 			<label for='album' class='vidlabel' style='display:inline;'>Name:</label>
-			<input id='album' name='album' value='<?php echo $album; ?>' style="width:300px;"/>
+			<input id='album' name='album' value='<?php echo htmlentities($album, ENT_QUOTES); ?>' style="width:300px;"/>
 			<br/><br/>
 			
 			<label for='description' class='vidlabel'>Description</label><br/>			

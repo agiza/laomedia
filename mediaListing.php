@@ -64,7 +64,8 @@ $start = $p_start;
 		$stmt->execute();		
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		$uploaddate =  date('m/d/Y',$row['uploaddate']);
-			echo "<tr><td>" . $row['mediaID'] . "</td><td><a href='settings.php?vid=" . $row['mediaID'] . "'>" . $row['title'] . "</a></td><td>" . $row['description'] . "</td><td>" . $row['tags'] . "</td><td>" . $uploaddate . "</td><td>" . $row['viewcount'] ."</td></tr>";
+		$title = stripslashes($row['title']);
+			echo "<tr><td>" . $row['mediaID'] . "</td><td><a href='settings.php?vid=" . $row['mediaID'] . "'>" . $title . "</a></td><td>" . $row['description'] . "</td><td>" . $row['tags'] . "</td><td>" . $uploaddate . "</td><td>" . $row['viewcount'] ."</td></tr>";
 		}		        
 
    

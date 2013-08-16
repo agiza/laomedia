@@ -8,7 +8,7 @@ include "dbconnect.php";
 include "validateContributor.php";
 
 //IMPORT VARIABLE assessmentID
-import_request_variables("pg","p_");
+import_request_variables("p","p_");
 
 $mediaID = $p_mediaID;
 $title = strip_tags($p_title);

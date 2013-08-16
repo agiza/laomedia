@@ -13,6 +13,7 @@ import_request_variables("pg","p_");
 $album = strip_tags($p_album);
 $description = strip_tags($p_description);
 
+
 //insert the new album name
 	$stmt = $db->prepare("INSERT INTO albums(album,description,permission) VALUES(:album,:description,:permission)");
 	$stmt->execute(array(':album' => $album, ':description' => $description, ':permission'=>'public'));

@@ -7,12 +7,26 @@ include "dbconnect.php";
 include "validateContributor.php";
 
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("pg","p_");
+//IMPORT VARIABLES
+import_request_variables("p","p_");
 
-$title = $p_title;
+$title = strip_tags($p_title);
 $date = time();
 $filename = $_FILES['files']['name'];
+
+//VALIDATE
+//IF NO FILE SELECTED RETURN TO FORM
+if (!$filename) {	
+	echo"You must select a file to upload.";
+	exit();
+}
+
+if($_FILES['files']['type'] != "audio/mpeg"){
+	echo"Uploaded file must be an .mp3 file.";
+	exit();
+	}
+
+
 
 	 
 $stmt = $db->prepare("INSERT INTO media(title,uploaddate,filename,permission,owner,type,caption,format,size,viewcount) VALUES(:title,:uploaddate,:filename,:permission,:owner,:type,:caption,:format,:size,:viewcount)");
@@ -35,13 +49,15 @@ if (is_uploaded_file($_FILES['files']['tmp_name'])) {
 			echo "<a href='settings.php?vid=" . $mediaID . "'>Go to Settings</a> for additional options for this video.";
 			echo "</div>";
     	}else{
+    		$stmt = $db->prepare("DELETE FROM media WHERE mediaID='$mediaID'");
+			$stmt->execute();
     		echo "Uploading of this audio file was unsuccessful. Please contact admin.";
     	}
     }else{
      echo "Error: No file selected.<br/>";
     }
 
-
+*/
 
 ?>
 

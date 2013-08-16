@@ -8,10 +8,10 @@ include "validateContributor.php";
 
 include "playerConfig.php";//$videoUploadPath
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("pg","p_");
+//IMPORT VARIABLES
+import_request_variables("p","p_");
 
-$title = $p_title;
+$title = strip_tags($p_title);
 $format = $p_format;
 $date = time();
 $filename = $_FILES['files']['name'][0];
@@ -20,7 +20,7 @@ $stmt = $db->prepare("INSERT INTO media(title,uploaddate,filename,permission,own
 $stmt->execute(array(':title' => $title, ':uploaddate'=>$date, ':filename'=>$filename,':permission'=>'public',':owner'=>$userID,':type'=>'multivid',':caption'=>'none',':format'=>$format,':size'=>'med',':viewcount'=>0));
 
 //this will be filename
-$videoID = $db->lastInsertId('mediaID');
+$mediaID = $db->lastInsertId('mediaID');
 
 //appended to filename
 $bitrate=hi;
@@ -38,13 +38,17 @@ foreach($_FILES['files']['name'] as $filename ){
     	$file_size =$_FILES['files']['size'][$count];
     	$file_tmp =$_FILES['files']['tmp_name'][$count];
     	
-    	$videoname = $videoID ."_" . $bitrate . ".mp4";
+    	$videoname = $mediaID ."_" . $bitrate . ".mp4";
    		$moveto = $uploadVideoPath . $videoname;
    		if(move_uploaded_file($file_tmp, $moveto)){
    		
    			echo $file_name . " as VideoID# " . $videoname . "<br/>";
     	}else{
+    		//if unsuccessfull delete data from DB and exit()
+    		$stmt = $db->prepare("DELETE FROM media WHERE mediaID='$mediaID'");
+			$stmt->execute();
     		echo "Failed to upload file.";
+    		exit();
     		}
     	
    	 }else{
@@ -64,21 +68,21 @@ $smilfile = '<smil>
   </head>
   <body>
     <switch>
-      <video src="mp4:' . $videoID . '_hi.mp4" system-bitrate="1100000" width="960" height="540" />
-      <video src="mp4:' . $videoID . '_med.mp4" system-bitrate="650000" width="640" height="360" />
-      <video src="mp4:' . $videoID . '_low.mp4" system-bitrate="500000" width="480" height="270" />
+      <video src="mp4:' . $mediaID . '_hi.mp4" system-bitrate="1100000" width="960" height="540" />
+      <video src="mp4:' . $mediaID . '_med.mp4" system-bitrate="650000" width="640" height="360" />
+      <video src="mp4:' . $mediaID . '_low.mp4" system-bitrate="500000" width="480" height="270" />
     </switch>
     </body> 
 </smil>';
 
-$filename = $uploadVideoPath . $videoID . ".smil";
+$filename = $uploadVideoPath . $mediaID . ".smil";
 $fp = fopen("$filename", "w");
 if (!$fp) die ("Cannot open file");
 fwrite($fp, $smilfile);
 fclose($fp);
 
 
-echo "<a href='settings.php?vid=" . $videoID . "'>Go to Settings</a> for additional options for this video.";
+echo "<a href='settings.php?vid=" . $mediaID . "'>Go to Settings</a> for additional options for this video.";
 echo "</div>";
 
 ?>

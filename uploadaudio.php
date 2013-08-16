@@ -68,10 +68,8 @@ include "validateContributor.php";
    		//Check required fields
    		var thisTitle = document.getElementById('title').value;
    			if(thisTitle == ""){ alert("Please enter required title"); return false;}
-   		var uploadFile = document.getElementById('fileToUpload0').value;
-   			if(uploadFile == ""){ alert("Please select a file to upload"); return false;}
    		if(!document.getElementById('fileToUpload0').value.match(/mp3$/)){
-   			alert("Upload file must be an .mp3."); 
+   			alert("Please select an .mp3 file to upload"); 
    			return false;
    			}	
    			

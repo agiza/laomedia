@@ -12,6 +12,12 @@ include "playerConfig.php";
 import_request_variables("pg","p_");
 
 $mediaID = $p_vid;
+if(!is_numeric($mediaID)){
+	echo"<div style='width:640px;height:500px;margin:0 auto;text-align:center'> <h2>Invalid Request</div>";
+	exit();
+	}
+
+
 //check for passed showpane variable
 if(isset($p_showpane)){
 	$showpane = $p_showpane;
@@ -23,7 +29,9 @@ $stmt = $db->prepare("SELECT * FROM media WHERE mediaID=:mediaID");
 $stmt->execute(array(':mediaID'=> $mediaID));
 $row = $stmt->fetch();
 $title = $row['title'];
+$title = stripslashes($title);
 $description = $row['description'];
+$description = stripslashes($description);
 $tags = $row['tags'];
 $origfilename = $row['filename'];
 $uploaddate = $row['uploaddate'];
@@ -187,7 +195,7 @@ jwplayer("mediaspace").setup({
      		<input type='hidden' name='mediaID' value='<?php echo $mediaID; ?>'/>
      	
 			<label for='title' class='vidlabel control-label'>Title: </label>			
-			<input id='title' name='title' style="width:400px;" value='<?php echo $title; ?>'/><br/><br/>
+			<input id='title' name='title' style="width:400px;" value='<?php echo htmlentities($title, ENT_QUOTES); ?>'/><br/><br/>
 				
 			<label for='description' class='vidlabel control-label'>Description</label>			
 			<textarea id='description' name='description' style="width:400px;"><?php echo $description; ?></textarea><br/>
@@ -319,7 +327,7 @@ jwplayer("mediaspace").setup({
       </div>
       
       <div class="span6">
-       <form id="permissionForm" method='POST' action='changePermission.php'>
+       <form id="permissionForm" method='POST' action='edit/changePermission.php'>
        <input type='hidden' name='mediaID' value='<?php echo $mediaID; ?>'/>
        	Public <input type="radio" name="permission" id="public" value="public" 
     <?php if($permission=='public'){echo "checked='checked'";} ?>/>&nbsp;&nbsp;&nbsp;

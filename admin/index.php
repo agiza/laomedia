@@ -34,8 +34,8 @@ include "validateAdmin.php";
 <div class="container">
 	<div class="row">
 		<div id="header">
-			<img id="PSUlogo" src="../assets/img/PSUlogo.png" alt="Penn State Logo" />
-			<a href="../index.php"><img id="laoMedia" src="../assets/img/laoMedia.png" alt="Liberal Arts Online Media" /></a>
+			<img id="PSUlogo" src="../assets/img/logo.png" alt="Penn State Logo" />
+			<a href="../index.php"><img id="laoMedia" src="../assets/img/headGraphic.png" alt="Liberal Arts Online Media" /></a>
 		</div>
 	</div>
 

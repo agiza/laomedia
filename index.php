@@ -113,6 +113,7 @@ include "playerConfig.php";
 		$row = $stmt->fetch();
 		$mediaID= $row['mediaID'];
 		$title = $row['title'];
+		$title = stripslashes($title);
 		$description = $row['description'];
 		$tags = $row['tags'];
 		$origfilename = $row['filename'];

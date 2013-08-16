@@ -68,8 +68,11 @@ include "validateContributor.php";
    		//Check required fields
    		var thisTitle = document.getElementById('title').value;
    			if(thisTitle == ""){ alert("Please enter required title"); return false;}
-   		var uploadFile = document.getElementById('fileToUpload0').value;
-   			if(uploadFile == ""){ alert("Please select a file to upload"); return false;}
+   		
+   		if((!document.getElementById('fileToUpload0').value.match(/mp4$/))  && (!document.getElementById('fileToUpload0').value.match(/m4v$/))){
+   			alert("Please select an .mp4 file to upload"); 
+   			return false;
+   			}	
    			
    		document.getElementById('displayprogress').style.display = 'block';
    		

@@ -7,7 +7,7 @@ include "../dbconnect.php";
 include "../validateInstructor.php";
 
 //IMPORT VARIABLE assessmentID
-import_request_variables("pg","p_");
+import_request_variables("p","p_");
 
 $mediaID = $p_mediaID;
 $useraccessID = strip_tags($p_useraccessID);

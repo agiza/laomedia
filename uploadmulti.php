@@ -66,12 +66,19 @@ include "validateContributor.php";
    		//Check required fields
    		var thisTitle = document.getElementById('title').value;
    			if(thisTitle == ""){ alert("Please enter required title"); return false;}
-   		var uploadFile0 = document.getElementById('fileToUpload0').value;
-   			if(uploadFile0 == ""){ alert("Please select a hi bitrate file to upload"); return false;}
-   		var uploadFile1 = document.getElementById('fileToUpload1').value;
-   			if(uploadFile1 == ""){ alert("Please select a medium bitrate file to upload"); return false;}
-   		var uploadFile2 = document.getElementById('fileToUpload2').value;
-   			if(uploadFile2 == ""){ alert("Please select a lo bitrate file to upload"); return false;}
+   			
+   		if((!document.getElementById('fileToUpload0').value.match(/mp4$/))  && (!document.getElementById('fileToUpload0').value.match(/m4v$/))){
+   			alert("Please select a .mp4 high bitrate file to upload"); 
+   			return false;
+   			}
+   		if((!document.getElementById('fileToUpload1').value.match(/mp4$/))  && (!document.getElementById('fileToUpload1').value.match(/m4v$/))){
+   			alert("Please select a .mp4 medium bitrate file to upload"); 
+   			return false;
+   			}
+   		if((!document.getElementById('fileToUpload2').value.match(/mp4$/))  && (!document.getElementById('fileToUpload2').value.match(/m4v$/))){
+   			alert("Please select a .mp4 low bitrate file to upload"); 
+   			return false;
+   			}
    
    		document.getElementById('displayprogress').style.display = 'block';
    		

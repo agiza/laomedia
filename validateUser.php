@@ -15,7 +15,7 @@ if(isset($_SERVER['REMOTE_USER'])){
 ASSIGN $userID BELOW FOR LOCAL INSTALLATION 
 */
 
-$userID = "admin";//comment out this line when in production or using Cosign 
+$userID = "srt142";//comment out this line when in production or using Cosign 
 
 
 $userID=strtolower($userID);
