@@ -57,7 +57,7 @@ if (is_uploaded_file($_FILES['files']['tmp_name'])) {
      echo "Error: No file selected.<br/>";
     }
 
-*/
+
 
 ?>
 

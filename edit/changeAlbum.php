@@ -34,12 +34,12 @@ if($albumID > 0){
 	$stmt = $db->prepare("UPDATE media SET permission='album' WHERE mediaID = :mediaID");
 	$stmt->execute(array(':mediaID'=>$mediaID));
 	
-	echo "<span style='color:green;'>Added to " . $albumname . "<span>";
+	//echo "<span style='color:green;'>Added to " . $albumname . "<span>";
 }else{//no album
 	//change media permissions status to 'public'
 $stmt = $db->prepare("UPDATE media SET permission='public' WHERE mediaID = :mediaID");
 $stmt->execute(array(':mediaID'=>$mediaID));
-	echo "<span style='color:red;'>Removed from albums.<span>";
+	//echo "<span style='color:red;'>Removed from albums.<span>";
 }
 
 

@@ -136,7 +136,7 @@ jwplayer("mediaspace").setup({
     		
     		}elseif($type == 'audio'){
     			echo '{file: "rtmp://' . $server . $wowzaport . $videocontent . 'mp3:' . $mediaID . '.mp3"},';
-    			echo '{file: "http://' . $server . $wowzaport . $videocontent . 'mp4:'  . $mediaID . '_hi.mp4/playlist.m3u8"}';
+    			echo '{file: "http://' . $server . $wowzaport . $videocontent . 'mp3:'  . $mediaID . '_hi.mp4/playlist.m3u8"}';
     		}
     		?>    		    
 		]

@@ -143,7 +143,8 @@ jwplayer("mediaspace").setup({
     			echo '{file: "rtmp://' . $server . $wowzaport . $videocontent . 'mp4:' . $mediaID . '.mp4"},';
     			echo '{file: "http://' . $server . $wowzaport . $videocontent . 'mp4:' .$mediaID . '.mp4/playlist.m3u8"}';
     		}elseif($type == 'audio'){
-    			echo'{file: "audio/' . $mediaID . '.mp3"}';
+    			echo '{file: "rtmp://' . $server . $wowzaport . $videocontent . 'mp3:' . $mediaID . '.mp3"},';
+    			echo '{file: "http://' . $server . $wowzaport . $videocontent . 'mp3:'  . $mediaID . '_hi.mp4/playlist.m3u8"}';
     		}
     		?>    		 
 		]
@@ -497,7 +498,7 @@ jwplayer("mediaspace").setup({
     <strong>Embed code:</strong><br/>
     <div id='formatResponse'>
     <p>Copy and Paste</p>
-    <textarea style='width:500px;'><iframe src='http://<?php echo $server; ?>/mediaframe.php?id=<?php echo $mediaID; ?> ' height='<?php echo $height; ?>px' width='<?php echo $width; ?>px'></iframe></textarea>
+    <textarea style='width:500px;'><iframe src='http://<?php echo $server; ?>/mediaframe.php?id=<?php echo $mediaID; ?>' height='<?php echo $height; ?>px' width='<?php echo $width; ?>px'></iframe></textarea>
     
     </div>
     

@@ -16,12 +16,18 @@ $format = $p_format;
 $date = time();
 $filename = $_FILES['files']['name'];
 
+//if file is larger than limit set in php.ini then it doesn't upload
+//and willl trigger this message
+if (!is_uploaded_file($_FILES['files']['tmp_name'])) {
+	echo"A file has not been selected or it is too large. <br/>Files size must be less than 1 GB.";
+	exit();
+}else{
+
 $stmt = $db->prepare("INSERT INTO media(title,uploaddate,filename,permission,owner,type,caption,format,size,viewcount) VALUES(:title,:uploaddate,:filename,:permission,:owner,:type,:caption,:format,:size,:viewcount)");
 $stmt->execute(array(':title' => $title, ':uploaddate'=>$date, ':filename'=>$filename,':permission'=>'public',':owner'=>$userID,':type'=>'singlevid',':caption'=>'none',':format'=>$format,':size'=>'med',':viewcount'=>0));
 
 $mediaID = $db->lastInsertId('mediaID');
 
-if (is_uploaded_file($_FILES['files']['tmp_name'])) {
     $filename = $_FILES['files']['name'];
     $file_size =$_FILES['files']['size'];
     $file_tmp =$_FILES['files']['tmp_name'];
@@ -39,9 +45,7 @@ if (is_uploaded_file($_FILES['files']['tmp_name'])) {
 			$stmt->execute();
     		echo "Uploading of this video was unsuccessful. Please contact admin.";
     	}
-    }else{
-     echo "Error: No file selected.<br/>";
-    }
+}
 
 ?>
 

@@ -9,6 +9,8 @@ include "../dbconnect.php";
 
 include "../validateContributor.php";
 
+include "../playerConfig.php";
+
 //IMPORT VARIABLE assessmentID
 import_request_variables("pg","p_");
 
