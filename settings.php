@@ -8,10 +8,8 @@ include "validateInstructor.php";
 
 include "playerConfig.php";
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("pg","p_");
-
-$mediaID = $p_vid;
+//IMPORT VARIABLE
+$mediaID = $_GET['vid'];
 if(!is_numeric($mediaID)){
 	echo"<div style='width:640px;height:500px;margin:0 auto;text-align:center'> <h2>Invalid Request</div>";
 	exit();
@@ -19,8 +17,8 @@ if(!is_numeric($mediaID)){
 
 
 //check for passed showpane variable
-if(isset($p_showpane)){
-	$showpane = $p_showpane;
+if(isset($_GET['showpane'])){
+	$showpane = $_GET['showpane'];
 	}
 
 
@@ -39,10 +37,11 @@ $uploaddate = date('m/d/Y',$uploaddate);
 $owner = $row['owner'];//userID of one who uploaded file
 $type = $row['type'];//is multi bitrate available?
 $permission = $row['permission'];//get permissions - public or limited?
-$caption = $row['caption'];//are captions available?
+$caption = $row['caption'];//are captions available? none, mediaID.srt or mediaID.vtt
+$transcript = $row['transcript'];//has a transcript file been uploaded?
 $format = $row['format'];
 $size = $row['size'];
-$posterimage = $row['posterimage'];//poster image uploaded or use default?
+$posterimage = $row['posterimage'];//poster image uploaded(1) or use default(null)? 
 $viewcount = $row['viewcount'];
 
 //set player size for this page
@@ -99,6 +98,7 @@ $albumsearch = $db->prepare("SELECT av.albumID,a.album,a.permission FROM albumme
 size = '<?php echo $size; ?>';
 format = '<?php echo $format; ?>';
 caption = '<?php echo $caption; ?>';
+transcript = '<?php echo $transcript; ?>';
 mediaID = <?php echo $mediaID; ?>;
 showpane = '<?php echo $showpane; ?>';
 
@@ -180,9 +180,9 @@ jwplayer("mediaspace").setup({
     		<li class="#pane1"><a href="#pane1" data-toggle="tab">Summary</a></li>
     		<li><a href="#pane2" data-toggle="tab">Album</a></li>
     		<li><a href="#pane3" data-toggle="tab">Permission</a></li>
-    		<li><a href="#pane4" data-toggle="tab">Caption</a></li>
+    		<li><a href="#pane4" data-toggle="tab">Caption/Transcript</a></li>
     		<li><a href="#pane5" data-toggle="tab">Poster Image</a></li>
-    		<li><a href="#pane6" data-toggle="tab">Format/Size/Embed</a></li>
+    		<li><a href="#pane6" data-toggle="tab">Size/Embed</a></li>
     		<li><a href="#pane7" data-toggle="tab"><span class="red">Delete</span></a></li>
   		</ul>
   
@@ -241,10 +241,11 @@ jwplayer("mediaspace").setup({
 		?>
 			<br/>
 		<span class='vidlabel'>Caption file:</span> <?php echo $caption; ?><br/>
+		<span class='vidlabel'>Transcript file:</span> <?php echo $transcript; ?><br/>
 		<span class='vidlabel'>Format:</span> <?php echo $format; ?><br/>
 		<span class='vidlabel'>Original Filename:</span> <?php echo $origfilename; ?><br/>
 		<span class='vidlabel'>Views:</span> <?php echo $viewcount; ?><br/>
-		<a href='media.php?id=<?php echo $mediaID; ?>' target='_blank'>Display Media Page</a>
+		<a href='http://<?php echo $server; ?>/media.php?id=<?php echo $mediaID; ?>' target='_blank'>Display Media Page</a>
 	</div>
 	<br/>		
     </div>
@@ -327,7 +328,7 @@ jwplayer("mediaspace").setup({
       <hr/>
       </div>
       
-      <div class="span6">
+      <div class="span7">
        <form id="permissionForm" method='POST' action='edit/changePermission.php'>
        <input type='hidden' name='mediaID' value='<?php echo $mediaID; ?>'/>
        	Public <input type="radio" name="permission" id="public" value="public" 
@@ -354,19 +355,19 @@ jwplayer("mediaspace").setup({
        </div>
        
        <!--right column-->
-   		<div class="span5">
-   		
+   		<div class="span4">   		
    			<small class='vidlabel'>
-       <ul>
-       <li>Permission can be set to "public", "PSU", "restricted", or "hide" and will override album settings.</li>
-       <li>Public can be viewed by all.</li>
-       <li>PSU can be viewed by all who can login through WebAccess.</li>
-       <li>Restricted can be viewed by listed PSU ID's.</li>
-       <li>Album inherits permissions from album setting.</li>
-       <li>Hide blocks viewing regardless of album settings.</li>
-       </ul>
-       </small> 
+       		<ul>
+       		<li>Permission can be set to "public", "PSU", "restricted", or "hide" and will override album settings.</li>
+       		<li>Public can be viewed by all.</li>
+       		<li>PSU can be viewed by all who can login through WebAccess.</li>
+       		<li>Restricted can be viewed by listed PSU ID's.</li>
+       		<li>Album inherits permissions from album setting.</li>
+       		<li>Hide blocks viewing regardless of album settings.</li>
+       		</ul>
+       		</small> 
     	</div>
+    	
     	<div id="permissionResponse" class="row span11">
     	<?php
     	if($permission=='restricted'){
@@ -385,45 +386,91 @@ jwplayer("mediaspace").setup({
     
     <!--CAPTION-->
     <div id="pane4" class="tab-pane">
-    <div class="span6">
-    <div id="iscaptionavail">
-    <?php
-    	if($caption==0){
-    	echo"<p>Currently no caption file is available.</p>";
-    	}else{
-    	echo "<p>A caption file has been added. <br/>This file can be overwritten with a newly uploaded file if changes are needed.</p>";
-    	}
-    ?>
-      </div>
+    	<div class="span7">
+    		<div id="iscaptionavail">
+    		<?php
+    		if($caption==0){
+    		echo"<p>Currently no caption file is available.</p>";
+    		}else{
+    		echo "<p>A caption file has been uploaded. <br/>This file can be overwritten with a subsequent uploads.</p>";
+    		}
+    		?>
+      		</div>
       <br/>
-      <form id="caption" action="edit/uploadCaptionFile.php" method="POST" enctype="multipart/form-data">
+      	<form id="caption" action="edit/uploadCaptionFile.php" method="POST" enctype="multipart/form-data">
      	 	<input type='hidden' name='mediaID' value='<?php echo $mediaID; ?>'/>
       
-            <label for="selectfile" class='vidlabel'>Upload File</label>
+            <label for="selectfile" class='vidlabel'>Select Caption File</label>
             <input type="file" name="file" id="selectfile"/><br/><br/>
-            <button type="submit" value="UPLOAD CAPTION FILE" class="btn btn-success"/><i class='icon-plus icon-white'></i> UPLOAD CAPTION FILE</button>
+            <button type="submit" class="btn btn-success"/><i class='icon-plus icon-white'></i> UPLOAD CAPTION FILE</button>
         
-        </form>
-     </div>
+        </form><br/>
+        
+     	</div>
      
-     <div class="span4 offset1">
-     <small>
-     <strong class='vidlabel'>Caption File Type</strong><br/>
-     Uploaded caption files must have the extension .srt or .vtt. These are the most common timestamped files used for captioning.
-     </small>
+     <!-- CAPTION RIGHT COLUMN-->
+     <div class="span4">
+     	<small>
+     	<strong class='vidlabel'>Caption File Type</strong><br/>
+     Uploaded caption files must have the extension .srt or .vtt. These are the most common timestamped file types used for captioning.
+     	</small>
      <br/><br/>
      	<div id="captionResponse" style="color:red;">
      		<?php
-     		if($caption != 0){
+     		if($caption != 'none'){
+     			echo "<a class='btn  btn-info' href='captions/" . $caption . "'><i class='icon-download icon-white'></i> DOWNLOAD THIS FILE</a><br/><br/>";
      			echo "<btn class='btn  btn-danger' onClick= 'deleteCaption();'><i class='icon-remove icon-white'></i> DELETE CAPTION FILE</button>";
      		}
      		?>
      	</div>
-     </div>
+     </div>	
+    <div class="span11 row" style="border-top:solid 1px #cecece;"></div>
      
+    <div class="span7 row"> 
+     <br/><strong>Transcript</strong>	
+     	 <div id="istranscriptavail">
+    	<?php
+    		if($transcript=='none'){
+    		echo"<p>Currently no transcript file is available.</p>";
+    		}else{
+    		echo "<p>A transcript file has been uploaded. <br/>This file can be overwritten with a subsequent uploads.</p>";
+    		}
+    	?>
+      </div>
+        
+        <form id="transcript" action="edit/uploadTranscriptFile.php" method="POST" enctype="multipart/form-data">
+     	 	<input type='hidden' name='mediaID' value='<?php echo $mediaID; ?>'/>
+      
+            <label for="transcript" class='vidlabel'>Select Transcript File</label>
+            <input type="file" name="file" id="transcript"/><br/>
+            <small class="indent">Transcript files must be .txt files.</small><br/><br/>
+            <button type="submit"  class="btn btn-success"/><i class='icon-plus icon-white'></i> UPLOAD TRANSCRIPT FILE</button>
+        
+        </form>
+        </div>
+        <br/>
      
-                  
-    </div><!--close caption tab-->
+      <!-- TRANSCRIPT RIGHT COLUMN-->
+     <div class="span4">	
+     <br/><small><strong class='vidlabel'>Transcript Files</strong></small><br/>
+     
+     <br/>
+     	<div id="transcriptResponse">
+     		<?php
+     		if($transcript != 0){
+     			echo "Transcript Link Code:<br/><textarea><a href='http://" . $server . "/transcripts/" . $transcript . "' target='_blank'>Transcript</a></textarea>";
+     			//echo "<br/><br/>HTML file URL: <br/>http://" . $server . "/transcripts/" . $mediaID . ".html";
+     			echo "<a href='http://" . $server . "/transcripts/" . $transcript . "'>Text File</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+     			echo "<a href='http://" . $server . "/transcripts/" . $mediaID . ".html' target='_blank'>HTML File</a><br/><br/>";
+     			echo "<btn class='btn  btn-danger' onClick= 'deleteTranscript();'><i class='icon-remove icon-white'></i> DELETE TRANSCRIPT FILE</button>";
+     		}
+     		?>
+     	</div>
+     	<br/><br/>
+     </div>	
+     
+     <br/><br/>                 
+    </div><!--close caption/transcript tab-->
     
     <!--POSTER IMAGE-->
     <div id="pane5" class="tab-pane">
@@ -476,7 +523,7 @@ jwplayer("mediaspace").setup({
     	<p>Audio files have only one format/size.</p>
    
     	<p>Copy and Paste</p>
-    	<textarea style='width:500px;'><iframe src='http://<?php echo $server; ?>/mediaframe.php?id=<?php echo $mediaID; ?> ' height='<?php echo $height; ?>px' width='<?php echo $width; ?>px'></iframe>
+    	<textarea style='width:500px;'><iframe src='//<?php echo $server; ?>/mediaframe.php?id=<?php echo $mediaID; ?> ' height='<?php echo $height; ?>px' width='<?php echo $width; ?>px'></iframe>
     	</textarea>
     
     <?php }else{ ?>
@@ -498,7 +545,7 @@ jwplayer("mediaspace").setup({
     <strong>Embed code:</strong><br/>
     <div id='formatResponse'>
     <p>Copy and Paste</p>
-    <textarea style='width:500px;'><iframe src='http://<?php echo $server; ?>/mediaframe.php?id=<?php echo $mediaID; ?>' height='<?php echo $height; ?>px' width='<?php echo $width; ?>px'></iframe></textarea>
+    <textarea style='width:500px;'><iframe src='//<?php echo $server; ?>/mediaframe.php?id=<?php echo $mediaID; ?>' height='<?php echo $height; ?>px' width='<?php echo $width; ?>px'></iframe></textarea>
     
     </div>
     

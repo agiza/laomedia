@@ -1,4 +1,12 @@
 <?php
+//FORCE HTTPS
+/*COMMENT OUT THIS REDIRECT FOR LOCAL INSTALLATION
+if($_SERVER["HTTPS"] != "on")
+{
+    header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);   
+}
+*/
+
 //VALIDATE USER - returns $userID
 //this include file will block any without webaccess login
 include "validateUser.php";
@@ -7,11 +15,9 @@ include "dbconnect.php";
 
 include "playerConfig.php";
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("pg","p_");
+//IMPORT VARIABLE MEDIA ID#
+$mediaID = $_GET['id'];
 
-//passed video id#
-$mediaID = $p_id;
 if(!is_numeric($mediaID)){
 	echo "<div style='width:300px;margin:50 auto;font-size:1.5em;'>Invalid media ID.</div>";
 	exit();
@@ -99,10 +105,12 @@ $db=null;
 <!-- Shim to make HTML5 elements usable in older Internet Explorer versions -->
 <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
-
-	
 	<style type="text/css">
-		
+	.offscreen {
+		position: absolute;
+		right: 101%;
+		overflow: hidden;
+	}
 	</style>
 
 <!-- START OF THE PLAYER EMBEDDING-->
@@ -179,9 +187,16 @@ jwplayer("mediaspace").setup({
 			
 	</script>
 
+   
+	</div>
+	
+	<!--offscreen play button for screen readers -->
+		<div class="offscreen">
+			<a href="#"  onclick='jwplayer().play()'>Start or Pause Video Playback</a>
+		</div>
 
-<script src="../assets/js/jquery.js"></script>    
-
+</div>
+<script src="../assets/js/jquery.js"></script> 
 </body>
 </html>
 

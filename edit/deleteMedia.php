@@ -8,10 +8,8 @@ include "../validateContributor.php";
 
 include "../playerConfig.php";//$uploadVideoPath,
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("pg","p_");
-
-$mediaID = $p_mediaID;
+//IMPORT VARIABLE
+$mediaID = $_GET['mediaID'];
 
 $stmt = $db->prepare("SELECT * FROM media WHERE mediaID=:mediaID");
 $stmt->execute(array(':mediaID'=> $mediaID));

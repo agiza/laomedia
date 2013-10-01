@@ -9,11 +9,9 @@ include "../dbconnect.php";
 
 include "../validateContributor.php";
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("p","p_");
-
-$mediaID = $p_mediaID;
-$albumID= $p_albumID;
+//IMPORT VARIABLES
+$mediaID = $_POST['mediaID'];
+$albumID= $_POST['albumID'];
 
 
 $stmt = $db->prepare("SELECT album FROM albums WHERE albumID = :albumID");

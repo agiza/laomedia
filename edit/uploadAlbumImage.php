@@ -7,9 +7,8 @@ include "../dbconnect.php";
 
 include "../validateContributor.php";
 
-//IMPORT VARIABLES
-import_request_variables("pg","p_");
-$albumID = $p_albumID;
+//IMPORT VARIABLE
+$albumID = $_POST['albumID'];
 
 
 //CHECK FILE

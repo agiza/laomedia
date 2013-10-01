@@ -1,4 +1,12 @@
 <?php
+//FORCE HTTPS
+/*COMMENT OUT THIS REDIRECT FOR LOCAL INSTALLATION
+if($_SERVER["HTTPS"] != "on")
+{
+    header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);   
+}
+*/
+
 //VALIDATE USER - returns $userID
 include "validateUser.php";
 
@@ -7,11 +15,9 @@ include "dbconnect.php";
 //returns $playerKey & $serverAddress
 include "playerConfig.php";
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("pg","p_");
+//IMPORT VARIABLE MEDIA ID#
+$mediaID = $_GET['id'];
 
-//passed video id#
-$mediaID = $p_id;
 if(!is_numeric($mediaID)){
 	echo "<div style='width:300px;margin:50 auto;font-size:1.5em;'>Invalid media ID.</div>";
 	exit();
@@ -91,7 +97,13 @@ $db=null;
 <!-- START OF THE PLAYER EMBEDDING-->
 <script type='text/javascript' src='assets/jwplayer/jwplayer.js'></script>
 <script type="text/javascript">jwplayer.key="<?php echo $playerKey; ?>";</script>
-                                     
+ <style type="text/css">
+	.offscreen {
+		position: absolute;
+		right: 101%;
+		overflow: hidden;
+	}
+	</style>                                    
 </head>
 <body style='margin:0;padding:0;'>
 <div id='mediaspace' style="margin:0px;padding:0px;border:none;"></div>
@@ -148,7 +160,12 @@ jwplayer("mediaspace").setup({
 
      		});
 			
-	</script>
+</script>
+	
+<!--offscreen play button for screen readers -->
+	<div class="offscreen">
+		<a href="#"  onclick='jwplayer().play()'>Start or Pause Video Playback</a>
+	</div>
 
 
 <script src="assets/js/jquery.js"></script>    

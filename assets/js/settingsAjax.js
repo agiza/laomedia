@@ -67,3 +67,19 @@
 	return false;  		
 	
 	}
+
+//DELETE TRANSCRIPT AJAX
+	function deleteTranscript(){
+		var dataString = 'mediaID='+mediaID + '&transcript=' + transcript;
+		$.ajax({
+			type: "POST",  
+ 			 url: "edit/deleteTranscript.php",  
+  			data: dataString,  
+  			success: function(data) {		
+  				document.getElementById('transcriptResponse').innerHTML=data;
+  				document.getElementById('istranscriptavail').innerHTML= "<p>Currently no transcript file is available.</p>";
+  			}   			
+   		 });      
+	return false;  		
+	
+	}

@@ -6,10 +6,8 @@ include "../dbconnect.php";
 
 include "../validateContributor.php";
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("p","p_");
-
-$mediaID = $p_mediaID;
+//IMPORT VARIABLE
+$mediaID = $_POST['mediaID'];
 
 //CHECK FILE
 if($_FILES['image_file']['name'] == null){

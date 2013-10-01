@@ -6,10 +6,8 @@ include "dbconnect.php";
 
 include "validateContributor.php";
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("pg","p_");
-
-$start = $p_start;
+//IMPORT VARIABLE
+$start = $_GET['start'];
 
 //how many media files?		
 	$stmt = $db->prepare("SELECT mediaID FROM media");

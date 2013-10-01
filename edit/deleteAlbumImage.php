@@ -10,10 +10,8 @@ include "../dbconnect.php";
 
 include "../validateContributor.php";
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("pg","p_");
-
-$albumID = $p_albumID;
+//IMPORT VARIABLE
+$albumID = $_GET['albumID'];
 
 
 //update DB

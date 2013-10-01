@@ -8,10 +8,8 @@ include "dbconnect.php";
 include "validateContributor.php";
 
 //IMPORT VARIABLES
-import_request_variables("pg","p_");
-
-$album = strip_tags($p_album);
-$description = strip_tags($p_description);
+$album = strip_tags($_POST['album']);
+$description = strip_tags($_POST['description']);
 
 
 //insert the new album name

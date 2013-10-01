@@ -31,6 +31,11 @@ Edit playerConfig.php
 
 The header graphics are located in assets/img and are called logo.png and headGraphic.png. Overwrite these with your own image of similar size for customization.
 
+IMPORTANT: Several files must be modified depending on whether the application is set up locally or on a server configured to use Cosign/WebAccess.
+	mediasecure.php  
+	mediaframesecure.php 
+		comment out or allow the FORCE HTTPS code beginning at line 4
+
 	
 Use
 

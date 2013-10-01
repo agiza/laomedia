@@ -10,7 +10,7 @@ Make changes as needed.
 */
 
 //SERVER HOST
-$server="localhost";
+$server="mamp/laomedia";
 //production
 //$server="server address";
 

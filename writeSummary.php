@@ -7,13 +7,11 @@ include "dbconnect.php";
 
 include "validateContributor.php";
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("p","p_");
-
-$mediaID = $p_mediaID;
-$title = strip_tags($p_title);
-$description = strip_tags($p_description);
-$tags = strip_tags($p_tags);
+//IMPORT VARIABLES
+$mediaID = $_POST['mediaID'];
+$title = strip_tags($_POST['title']);
+$description = strip_tags($_POST['description']);
+$tags = strip_tags($_POST['tags']);
 $date = time();
 
 

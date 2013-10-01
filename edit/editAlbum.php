@@ -6,10 +6,8 @@ include "../dbconnect.php";
 
 include "../validateContributor.php";
 
-//IMPORT VARIABLES
-import_request_variables("pg","p_");
-
-$albumID = $p_albumID;
+//IMPORT VARIABLE
+$albumID = $_GET['albumID'];
 
  $stmt = $db->prepare("SELECT * FROM albums WHERE albumID = $albumID");
 		$stmt->execute();

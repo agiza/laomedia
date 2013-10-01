@@ -10,11 +10,8 @@ include "../dbconnect.php";
 
 include "../validateContributor.php";
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("pg","p_");
-
-$mediaID = $p_mediaID;
-
+//IMPORT VARIABLE
+$mediaID = $_GET['mediaID'];
 
 //update DB
 $stmt = $db->prepare("UPDATE media SET posterimage=0 WHERE mediaID = $mediaID");

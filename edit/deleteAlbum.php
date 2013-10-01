@@ -9,7 +9,7 @@ include "../validateContributor.php";
 //IMPORT VARIABLE assessmentID
 import_request_variables("pg","p_");
 
-$albumID = $p_albumID;
+$albumID = $_GET['albumID'];
 
 $stmt = $db->prepare("SELECT * FROM albums WHERE albumID=:albumID");
 $stmt->execute(array(':albumID'=> $albumID));

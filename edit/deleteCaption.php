@@ -6,11 +6,9 @@ include "../dbconnect.php";
 
 include "../validateContributor.php";
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("pg","p_");
-
-$mediaID = $p_mediaID;
-$caption = $p_caption;
+//IMPORT VARIABLES
+$mediaID = $_POST['mediaID'];
+$caption = $_POST['caption'];
 
 //DELETE CAPTION FILE
 	$thiscaptionfile="../captions/" . $caption;
@@ -25,7 +23,7 @@ $stmt->execute(array(':mediaID'=>$mediaID));
 echo "The caption file, " .  $caption . ", has been deleted.";
 
 //GO TO index.php
-$goto = "../settings.php?vid=" . $mediaID;
+//$goto = "../settings.php?vid=" . $mediaID;
 //echo "<script> window.location.href = '$goto' </script>";
 
 ?>

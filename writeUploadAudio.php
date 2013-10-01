@@ -8,9 +8,7 @@ include "validateContributor.php";
 
 
 //IMPORT VARIABLES
-import_request_variables("p","p_");
-
-$title = strip_tags($p_title);
+$title = strip_tags($_POST['title']);
 $date = time();
 $filename = $_FILES['files']['name'];
 
@@ -30,7 +28,7 @@ if($_FILES['files']['type'] != "audio/mpeg"){
 
 	 
 $stmt = $db->prepare("INSERT INTO media(title,uploaddate,filename,permission,owner,type,caption,format,size,viewcount) VALUES(:title,:uploaddate,:filename,:permission,:owner,:type,:caption,:format,:size,:viewcount)");
-$stmt->execute(array(':title' => $title, ':uploaddate'=>$date, ':filename'=>$filename,':permission'=>'public',':owner'=>$userID,':type'=>'audio',':caption'=>'none',':format'=>'audio',':size'=>'med',':viewcount'=>0));
+$stmt->execute(array(':title' => $title, ':uploaddate'=>$date, ':filename'=>$filename,':permission'=>'public',':owner'=>$userID,':type'=>'audio',':caption'=>'none',':transcript'=>'none',':format'=>'audio',':size'=>'med',':viewcount'=>0));
 
 $mediaID = $db->lastInsertId('mediaID');
 

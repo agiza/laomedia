@@ -9,10 +9,8 @@ include "validateContributor.php";
 include "playerConfig.php";//$uploadVideoPath
 
 //IMPORT VARIABLES
-import_request_variables("p","p_");
-
-$title = strip_tags($p_title);
-$format = $p_format;
+$title = strip_tags($_POST['title']);
+$format = $_POST['format'];
 $date = time();
 $filename = $_FILES['files']['name'];
 
@@ -24,7 +22,7 @@ if (!is_uploaded_file($_FILES['files']['tmp_name'])) {
 }else{
 
 $stmt = $db->prepare("INSERT INTO media(title,uploaddate,filename,permission,owner,type,caption,format,size,viewcount) VALUES(:title,:uploaddate,:filename,:permission,:owner,:type,:caption,:format,:size,:viewcount)");
-$stmt->execute(array(':title' => $title, ':uploaddate'=>$date, ':filename'=>$filename,':permission'=>'public',':owner'=>$userID,':type'=>'singlevid',':caption'=>'none',':format'=>$format,':size'=>'med',':viewcount'=>0));
+$stmt->execute(array(':title' => $title, ':uploaddate'=>$date, ':filename'=>$filename,':permission'=>'public',':owner'=>$userID,':type'=>'singlevid',':caption'=>'none',':transcript'=>'none',':format'=>$format,':size'=>'med',':viewcount'=>0));
 
 $mediaID = $db->lastInsertId('mediaID');
 

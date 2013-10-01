@@ -11,12 +11,10 @@ include "../validateContributor.php";
 
 include "../playerConfig.php";
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("pg","p_");
-
-$mediaID = $p_mediaID;
-$format= $p_format;
-$size = $p_size;
+//IMPORT VARIABLES
+$mediaID = $_POST['mediaID'];
+$format= $_POST['format'];
+$size = $_POST['size'];
 
 //set width & height variables
 include "../functions/playersize.php";
@@ -26,7 +24,7 @@ $stmt = $db->prepare("UPDATE media SET format=:format, size=:size WHERE mediaID 
 $stmt->execute(array(':format' => $format, ':size' => $size, ':mediaID' => $mediaID));
 
 //return updated embed code
-echo "<p>Copy and Paste</p><textarea style='width:500px;'><iframe src='http://" . $server . "/mediaframe.php?id=" . $mediaID . "' height='" . $height . "' width='" . $width . "'></iframe></textarea>";
+echo "<p>Copy and Paste</p><textarea style='width:500px;'><iframe src='//" . $server . "/mediaframe.php?id=" . $mediaID . "' height='" . $height . "' width='" . $width . "'></iframe></textarea>";
 
 
 ?>

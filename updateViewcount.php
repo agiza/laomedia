@@ -8,8 +8,8 @@ include "dbconnect.php";
 //IMPORT VARIABLE assessmentID
 import_request_variables("pg","p_");
 
-$mediaID = $p_mediaID;
-$viewcount= $p_viewcount;
+$mediaID = $_POST['mediaID'];
+$viewcount= $_POST['viewcount'];
 
 $stmt = $db->prepare("UPDATE media SET viewcount=:viewcount WHERE mediaID = :mediaID");
 $stmt->execute(array(':viewcount'=>$viewcount,':mediaID'=>$mediaID));

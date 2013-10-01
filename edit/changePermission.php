@@ -6,18 +6,16 @@ include "../dbconnect.php";
 
 include "../validateInstructor.php";
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("p","p_");
-
-$mediaID = $p_mediaID;
-$useraccessID = strip_tags($p_useraccessID);
+//IMPORT VARIABLES
+$mediaID = $_POST['mediaID'];
+$useraccessID = strip_tags($_POST['useraccessID']);
 $useraccessID = strtolower($useraccessID);//make lowercase
 $useraccessID= str_replace(" ","",$useraccessID);//remove whitespace
 $useraccessID= str_replace("'","",$useraccessID);//remove single quotes
 $useraccessID= str_replace('"',"",$useraccessID);//remove double quotes
 $access=explode(",",$useraccessID);//array of separate userIDs
-$permission = $p_permission;
-$overwrite = $p_overwrite;
+$permission = $_POST['permission'];
+$overwrite = $_POST['overwrite'];
 $pattern ="/^[A-Za-z]{3}[0-9]{1,4}$/";//regex for PSU user ID (3 letters, 1-4 numbers)
 
 

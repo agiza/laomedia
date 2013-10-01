@@ -6,10 +6,8 @@ include "../dbconnect.php";
 
 include "../validateContributor.php";
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("p","p_");
-
-$mediaID = $p_mediaID;
+//IMPORT VARIABLES
+$mediaID = $_POST['mediaID'];
 $filename = $_FILES['file']['name'];
 
 //GET LOWER CASE OF FILE EXTENSION
@@ -44,7 +42,7 @@ $stmt = $db->prepare("UPDATE media SET caption = :caption WHERE mediaID = :media
 $stmt->execute(array(':caption'=>$captionfile,':mediaID'=>$mediaID));
 
 //GO TO admin.php
-$goto = "../settings.php?vid=" . $mediaID;
+$goto = "../settings.php?vid=" . $mediaID . "&showpane=pane4";
 echo "<script> window.location.href = '$goto' </script>";
 
 ?>

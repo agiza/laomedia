@@ -3,28 +3,25 @@ include "dbconnect.php";
 
 include "playerConfig.php";
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("pg","p_");
+//IMPORT VARIABLE MEDIA ID#
+$mediaID = $_GET['id'];
 
-//passed video id#
-$mediaID = $p_id;
 if(!is_numeric($mediaID)){
 	echo "<div style='width:300px;margin:50 auto;font-size:1.5em;'>Invalid media ID.</div>";
 	exit();
 	}
 
 
-//IS MEDIA IN ALBUM WITH RESTRICTED ACCESS
-//GET VIDEO INFO
+//IS VIDEO IN ALBUM WITH RESTRICTED ACCESS?
+$albumPermission = 1;//set flag to public viewing
+//GET ALBUM INFO
 $stmt = $db->prepare("SELECT albummedia.albumID, albums.album, albums.permission FROM albummedia LEFT JOIN albums ON albummedia.albumID = albums.albumID WHERE albummedia.mediaID = :mediaID");
 			$stmt->execute(array(':mediaID'=> $mediaID));
 			$row = $stmt->fetch(PDO::FETCH_ASSOC); 
 			//IF ALBUM PERMISSION RESTRICTED REDIRECT TO HTTPS
 			if(isset($row['permission'])){
 				if($row['permission'] != 'public'){
-					//header("Location: https://" . $server . "/mediasecure.php?id=" . $mediaID);
-					//local install
-					header("Location:mediasecure.php?id=" . $mediaID);
+					$albumPermission = 0;//change flag to restricted viewing
 				}
 			}
 
@@ -44,15 +41,15 @@ $viewcount = $row['viewcount'] + 1;
 
 if($stmt->rowCount() > 0){//video ID exists
 //CHECK VIDEO PERMISSION
-	if(($permission == 'public') || ($permission == 'album')){
+	if($permission == 'public'){
 		//show video
 	}elseif($permission == 'hidden'){
 		echo"<div style='text-align:center;margin-top:150px;'>This video has restricted viewing access.</div>";
 		exit();
+	}elseif(($permission == 'album') && ($albumPermission == 1)){	
+		//show video
 	}else{	
 	//redirect to secure page
-	//header("Location: https://" . $server . "/mediasecure.php?id=" . $mediaID);
-	//local install
 	header("Location:mediasecure.php?id=" . $mediaID);
 	}
 }
@@ -77,7 +74,7 @@ $db=null;
 
     <!-- Le styles -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <!--<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">-->
     <link href="assets/css/laoMedia.css" rel="stylesheet">
 	<link rel="stylesheet" href="assets/css/jquery.fileupload-ui.css">
 	
@@ -86,14 +83,16 @@ $db=null;
 	<noscript><link rel="stylesheet" href="../assets/css/jquery.fileupload-ui-noscript.css"></noscript>
 <!-- Shim to make HTML5 elements usable in older Internet Explorer versions -->
 <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-
-
 	
 	<style type="text/css">
-		
+	.offscreen {
+		position: absolute;
+		right: 101%;
+		overflow: hidden;
+	}
 	</style>
 
-<!-- START OF THE PLAYER EMBEDDING-->
+<!-- PLAYER JS-->
 <script type='text/javascript' src='assets/jwplayer/jwplayer.js'></script>
 <script type="text/javascript">jwplayer.key="<?php echo $playerKey; ?>";</script>
                                      
@@ -181,6 +180,7 @@ jwplayer("mediaspace").setup({
 	</script>
 
 	</div>
+
 	
 <?php
 }//close conditional
@@ -188,6 +188,11 @@ jwplayer("mediaspace").setup({
 
 	
 </div>
+
+<!--offscreen play button for screen readers -->
+		<div class="offscreen">
+			<a href="#"  onclick='jwplayer().play()'>Start or Pause Video Playback</a>
+		</div>
 
 <script src="assets/js/jquery.js"></script>    
 

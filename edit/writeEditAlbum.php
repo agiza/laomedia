@@ -8,18 +8,17 @@ include "../dbconnect.php";
 include "../validateContributor.php";
 
 //IMPORT VARIABLES
-import_request_variables("pg","p_");
-$albumID = $p_albumID;
-$album = strip_tags($p_album);
-$description = strip_tags($p_description);
-$permission = $p_permission;
+$albumID = $_POST['albumID'];
+$album = strip_tags($_POST['album']);
+$description = strip_tags($_POST['description']);
+$permission = $_POST['permission'];
 $courseID = null; //initial set
 if($permission == 'restricted'){
-	$courseID = strip_tags($p_courseID);
-	$useraccessID = strip_tags($p_useraccessID);
+	$courseID = strip_tags($_POST['courseID']);
+	$useraccessID = strip_tags($_POST['useraccessID']);
 	$useraccessID = str_replace(" ","",$useraccessID);//remove whitespace
 	$userIDarray = explode(",",$useraccessID);
-	$overwrite = $p_overwrite;
+	$overwrite = $_POST['overwrite'];
 	}
 
 $stmt = $db->prepare("UPDATE albums SET album=:album,description=:description,permission=:permission,courseID=:courseID WHERE albumID = :albumID");

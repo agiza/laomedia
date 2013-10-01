@@ -6,10 +6,8 @@ include "dbconnect.php";
 
 include "validateInstructor.php";
 
-//IMPORT VARIABLE assessmentID
-import_request_variables("pg","p_");
-
-$albumID = $p_albumID;
+//IMPORT VARIABLE ALBUM ID
+$albumID = $_GET['albumID'];
 
 if(isset($p_start)){
 	$start = $p_start;//passed value
@@ -69,7 +67,7 @@ $videocount = $stmt->rowCount('mediaID');//total media items
 		$description = stripslashes($row['description']);
 		$permission = $row['permission'];
 	
-	$stmt = $db->prepare("SELECT albummedia.albumID, media.mediaID, media.title, media.description,media.permission,media.caption,media.viewcount FROM albummedia LEFT JOIN media ON albummedia.mediaID = media.mediaID WHERE albummedia.albumID = :albumID ORDER BY media.title ASC LIMIT $start,20");
+	$stmt = $db->prepare("SELECT albummedia.albumID, media.mediaID, media.title, media.description,media.permission,media.caption,media.transcript,media.viewcount FROM albummedia LEFT JOIN media ON albummedia.mediaID = media.mediaID WHERE albummedia.albumID = :albumID ORDER BY media.title ASC LIMIT $start,20");
 $stmt->execute(array(':albumID'=> $albumID)); 
 $result = $stmt->fetchAll();
 		
@@ -111,7 +109,7 @@ $result = $stmt->fetchAll();
         
     <div class="row span10 offset1" style='margin-top:1em;'>
      <table class="table table-striped">
-        <tr><th>ID #</th><th>Title</th><th>Description</th><th>Caption</th><th>Views</th></tr>
+        <tr><th>ID #</th><th>Title</th><th>Description</th><th>Cap</th><th>Trans</th><th>Views</th></tr>
     <?php
   		foreach($result as $row){
 			//echo $row['title'] . "<br/>";
@@ -126,6 +124,11 @@ $result = $stmt->fetchAll();
 				}
 			echo "<a href='settings.php?vid=" . $row['mediaID'] . "'>" . $row['title'] . "</a></td><td>" . $row['description'] . "</td>";
 			if($row['caption'] != 'none'){
+				echo "<td>&nbsp;&nbsp; <i class='icon-ok'></i></td>";
+			}else{
+				echo "<td></td>";
+			}
+			if($row['transcript'] != 'none'){
 				echo "<td>&nbsp;&nbsp; <i class='icon-ok'></i></td>";
 			}else{
 				echo "<td></td>";
