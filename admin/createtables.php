@@ -33,7 +33,7 @@ echo"<h3>A new 'users' table has been created.</h3><br/>";
 $dropTable = $db->prepare('DROP TABLE IF EXISTS media');
 $dropTable->execute();
 
-$createTable = $db->prepare('CREATE TABLE media (mediaID int primary key auto_increment, title varchar(50), description varchar(200), tags varchar(200), permission varchar(20), password varchar(20), filename varchar(50), uploaddate varchar(20), owner varchar(50), type varchar(20),format varchar(20), size varchar(10), posterimage integer, caption varchar(40), viewcount integer)');
+$createTable = $db->prepare('CREATE TABLE media (mediaID int primary key auto_increment, title varchar(50), description varchar(200), tags varchar(200), permission varchar(20), password varchar(20), filename varchar(50), uploaddate varchar(20), owner varchar(50), type varchar(20),format varchar(20), size varchar(10), posterimage integer, caption varchar(40), transcript varchar(40),viewcount integer)');
 $createTable->execute();
 
 $alterTable = $db->exec("ALTER TABLE media auto_increment=1000");
